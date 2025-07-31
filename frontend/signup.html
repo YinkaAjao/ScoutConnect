@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./tailwind/tailwind.css">
+    <style>
+        .auth-card {
+            transition: all 0.3s ease;
+        }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-type-btn {
+            transition: all 0.3s ease;
+            background-color: white;
+            color: black;
+        }
+
+        .dark .user-type-btn {
+            background-color: #1f2937;
+            color: #d1d5db;
+        }
+
+        .user-type-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300"
+            id="dark-mode-toggle">
+            <i class='bx bxs-moon'></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold dark:text-dark-txt mb-2">Create Your Account</h1>
+                <p class="text-gray-600 dark:text-dark-txt">Join ScoutConnect as either an athlete or scout</p>
+            </div>
+
+            <!-- User Type Selection -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-6 mb-6 auth-card">
+                <h2 class="text-lg font-medium dark:text-dark-txt mb-4">I am a:</h2>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button id="athlete-btn"
+                        class="user-type-btn active py-3 rounded-lg border border-gray-300 dark:border-dark-third font-medium flex flex-col items-center justify-center">
+                        <i class='bx bx-run text-3xl mb-2'></i>
+                        Athlete
+                    </button>
+                    <button id="scout-btn"
+                        class="user-type-btn py-3 rounded-lg border border-gray-300 dark:border-dark-third font-medium flex flex-col items-center justify-center">
+                        <i class='bx bx-search-alt text-3xl mb-2'></i>
+                        Scout
+                    </button>
+                </div>
+
+                <!-- Signup Form -->
+                <form id="signup-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Full Name</label>
+                        <input type="text" name="fullName" id="fullName" required
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Email</label>
+                        <input type="email" name="email" id="email" required
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Password</label>
+                        <input type="password" name="password" id="password" required
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+
+                    <!-- Athlete Specific Fields -->
+                    <div id="athlete-fields">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Sport</label>
+                            <select id="sport"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                <option value="">Select your sport</option>
+                                <option value="football">Football</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="athletics">Athletics</option>
+                                <option value="swimming">Swimming</option>
+                                <option value="tennis">Tennis</option>
+                                <option value="volleyball">Volleyball</option>
+                                <option value="rugby">Rugby</option>
+                                <option value="boxing">Boxing</option>
+                                <option value="judo">Judo</option>
+                                <option value="cycling">Cycling</option>
+                                <option value="table-tennis">Table Tennis</option>
+                                <option value="cricket">Cricket</option>
+                                <option value="handball">Handball</option>
+                                <option value="karate">Karate</option>
+                                <option value="taekwondo">Taekwondo</option>
+                                <option value="badminton">Badminton</option>
+                                <option value="weightlifting">Weightlifting</option>
+                                <option value="golf">Golf</option>
+                                <option value="wrestling">Wrestling</option>
+                                <option value="esports">eSports</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium dark:text-dark-txt mb-1">Age</label>
+                                <input id="age" type="number"
+                                    class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium dark:text-dark-txt mb-1">Country</label>
+                                <select id="country"
+                                    class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                    <option value="">Select country</option>
+                                    <option value="algeria">Algeria</option>
+                                    <option value="angola">Angola</option>
+                                    <option value="benin">Benin</option>
+                                    <option value="botswana">Botswana</option>
+                                    <option value="burkina-faso">Burkina Faso</option>
+                                    <option value="burundi">Burundi</option>
+                                    <option value="cabo-verde">Cabo Verde</option>
+                                    <option value="cameroon">Cameroon</option>
+                                    <option value="central-african-republic">Central African Republic</option>
+                                    <option value="chad">Chad</option>
+                                    <option value="comoros">Comoros</option>
+                                    <option value="congo-brazzaville">Republic of the Congo</option>
+                                    <option value="congo-kinshasa">Democratic Republic of the Congo</option>
+                                    <option value="cote-divoire">Côte d'Ivoire</option>
+                                    <option value="djibouti">Djibouti</option>
+                                    <option value="egypt">Egypt</option>
+                                    <option value="equatorial-guinea">Equatorial Guinea</option>
+                                    <option value="eritrea">Eritrea</option>
+                                    <option value="eswatini">Eswatini</option>
+                                    <option value="ethiopia">Ethiopia</option>
+                                    <option value="gabon">Gabon</option>
+                                    <option value="gambia">Gambia</option>
+                                    <option value="ghana">Ghana</option>
+                                    <option value="guinea">Guinea</option>
+                                    <option value="guinea-bissau">Guinea-Bissau</option>
+                                    <option value="kenya">Kenya</option>
+                                    <option value="lesotho">Lesotho</option>
+                                    <option value="liberia">Liberia</option>
+                                    <option value="libya">Libya</option>
+                                    <option value="madagascar">Madagascar</option>
+                                    <option value="malawi">Malawi</option>
+                                    <option value="mali">Mali</option>
+                                    <option value="mauritania">Mauritania</option>
+                                    <option value="mauritius">Mauritius</option>
+                                    <option value="morocco">Morocco</option>
+                                    <option value="mozambique">Mozambique</option>
+                                    <option value="namibia">Namibia</option>
+                                    <option value="niger">Niger</option>
+                                    <option value="nigeria">Nigeria</option>
+                                    <option value="rwanda">Rwanda</option>
+                                    <option value="sao-tome-principe">São Tomé and Príncipe</option>
+                                    <option value="senegal">Senegal</option>
+                                    <option value="seychelles">Seychelles</option>
+                                    <option value="sierra-leone">Sierra Leone</option>
+                                    <option value="somalia">Somalia</option>
+                                    <option value="south-africa">South Africa</option>
+                                    <option value="south-sudan">South Sudan</option>
+                                    <option value="sudan">Sudan</option>
+                                    <option value="tanzania">Tanzania</option>
+                                    <option value="togo">Togo</option>
+                                    <option value="tunisia">Tunisia</option>
+                                    <option value="uganda">Uganda</option>
+                                    <option value="zambia">Zambia</option>
+                                    <option value="zimbabwe">Zimbabwe</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scout Specific Fields -->
+                    <div id="scout-fields" class="hidden">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Organization</label>
+                            <input id="organization" type="text"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Scout Type</label>
+                            <select id="scout-type"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                <option value="">Select Scout Type</option>
+                                <option value="club-scout">Club Scout</option>
+                                <option value="national-team-scout">National Team Scout</option>
+                                <option value="academy-scout">Academy Scout</option>
+                                <option value="independent-scout">Independent Scout</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Scouting License Number (if
+                                applicable)</label>
+                            <input id="license" type="text"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <input type="checkbox" id="terms" required class="mr-2">
+                        <label for="terms" class="text-sm dark:text-dark-txt">I agree to the <a href="#"
+                                class="text-blue-500">Terms of Service</a> and <a href="#" class="text-blue-500">Privacy
+                                Policy</a></label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-medium">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center text-sm dark:text-dark-txt">
+                Already have an account? <a href="login.html" class="text-blue-500 font-medium">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dark/Light Mode Toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+            // Check for saved user preference or use system preference
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            darkModeToggle.addEventListener('click', function () {
+                const isDark = document.documentElement.classList.contains('dark');
+
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.innerHTML = '<i class="bx bx-sun"></i>';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.innerHTML = '<i class="bx bxs-moon"></i>';
+                }
+            });
+
+            const athleteBtn = document.getElementById('athlete-btn');
+            const scoutBtn = document.getElementById('scout-btn');
+            const athleteFields = document.getElementById('athlete-fields');
+            const scoutFields = document.getElementById('scout-fields');
+
+            // Toggle between athlete and scout forms
+            athleteBtn.addEventListener('click', function () {
+                athleteBtn.classList.add('active');
+                scoutBtn.classList.remove('active');
+                athleteFields.classList.remove('hidden');
+                scoutFields.classList.add('hidden');
+            });
+
+            scoutBtn.addEventListener('click', function () {
+                scoutBtn.classList.add('active');
+                athleteBtn.classList.remove('active');
+                scoutFields.classList.remove('hidden');
+                athleteFields.classList.add('hidden');
+            });
+
+            // Form submission
+            const signupForm = document.getElementById('signup-form');
+            signupForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const isAthlete = athleteBtn.classList.contains('active');
+                const formData = {
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    full_name: document.getElementById('fullName').value,
+                    user_type: isAthlete ? 'athlete' : 'scout'
+                };
+
+                // Add user type specific data
+                if (isAthlete) {
+                    formData.sport = document.getElementById('sport').value;
+                    formData.age = document.getElementById('age').value;
+                    formData.country = document.getElementById('country').value;
+                } else {
+                    formData.organization = document.getElementById('organization').value;
+                    formData.license = document.getElementById('license').value;
+                    formData.scoutType = document.getElementById('scout-type').value;
+                    formData.country = document.getElementById('country').value;
+                }
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Save token to localStorage
+                        localStorage.setItem('token', data.token);
+
+                        // Redirect based on user type
+                        if (data.user.user_type === 'athlete') {
+                            window.location.href = 'athlete/athletedashboard.html';
+                        } else {
+                            window.location.href = 'scout/scoutdashboard.html';
+                        }
+                    } else {
+                        alert(data.error || 'Registration failed');
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Registration failed. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

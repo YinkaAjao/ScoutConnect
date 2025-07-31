@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .achievement-card {
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV -->
+    <nav
+        class="bg-white dark:bg-dark-second h-max md:h-14 w-full shadow flex flex-col md:flex-row items-center justify-center md:justify-between fixed top-0 z-50 border-b dark:border-dark-third">
+
+        <!-- LEFT NAV -->
+        <div class="flex items-center justify-between w-full md:w-max px-4 py-2">
+            <a href="#" class="mr-2 hidden md:inline-block">
+                <img src="./images/sc-logo.png" alt="ScoutConnect logo" class="w-24 sm:w-20 lg:w-10 h-auto">
+            </a>
+            <a href="#" class="inline-block md:hidden">
+                <img src="./images/sc-logo-mb.png" alt="" class="w-32 h-auto">
+            </a>
+            <div class="flex items-center justify-between space-x-1">
+                <div
+                    class="relative bg-gray-100 dark:bg-dark-third px-2 py-2 w-10 h-10 sm:w-11 sm:h-11 lg:h-10 lg:w-10 xl:w-max xl:pl-3 xl:pr-8 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class='bx bx-search-alt-2 text-xl xl:mr-2 dark:text-dark-txt'></i>
+                    <input type="text" placeholder="Search videos..."
+                        class="outline-none bg-transparent hidden xl:inline-block">
+                </div>
+                <div
+                    class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt"
+                    id="dark-mode-toggle-mb">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT NAV -->
+
+        <!-- MAIN NAV -->
+        <ul class="flex w-full lg:w-max items-center justify-center">
+            <li class="w-1/5 md:w-max text-center">
+                <a href="athletedashboard.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bxs-home'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="achievements.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block text-blue-500 border-b-4 border-blue-500">
+                    <i class='bx bx-trophy'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="events.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-calendar'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center hidden md:inline-block">
+                <a href="videos.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-video'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center inline-block md:hidden">
+                <a href="#"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-menu'></i>
+                </a>
+            </li>
+        </ul>
+        <!-- END MAIN NAV -->
+
+        <!-- RIGHT NAV -->
+        <ul class="hidden md:flex mx-4 items-center justify-center">
+            <li class="h-full hidden xl:flex">
+                <a href="athlete_profile.html"
+                    class="inline-flex items-center justify-center p-1 rounded-full hover:bg-gray-200 dark:hover:bg-dark-third mx-1">
+                    <img src="./images/profile.jpg" alt="Profile picture" class="rounded-full h-7 w-7">
+                    <span class="mx-2 font-semibold dark:text-dark-txt">Athlete</span>
+                </a>
+            </li>
+            <li>
+                <button id="logout-btn"
+                    class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                    <i class='bx bx-log-out'></i>
+                </button>
+                <script>
+                    document.getElementById('logout-btn').addEventListener('click', function () {
+                        localStorage.removeItem('token');
+                        window.location.href = '/frontend/login.html';
+                    });
+                </script>
+            </li>
+            <li>
+                <a href="messages.html" class="group relative">
+                    <div
+                        class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300">
+                        <i class='bx bx-message-rounded'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="notifications.html" class="group relative">
+                    <div
+                        class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                        <i class='bx bxs-bell'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative"
+                    id="dark-mode-toggle">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END RIGHT NAV -->
+    </nav>
+    <!-- END NAV -->
+
+    <!-- MAIN -->
+    <div class="flex justify-center h-screen pt-16">
+        <!-- LEFT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 left-0">
+            <ul class="p-4">
+                <li>
+                    <a href="athlete_profile.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-user-circle text-2xl'></i>
+                        <span class="font-semibold">My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-group text-2xl'></i>
+                        <span class="font-semibold">Connections</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-calendar-event text-2xl'></i>
+                        <span class="font-semibold">Events</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bar-chart-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Performance Stats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-video text-2xl'></i>
+                        <span class="font-semibold">Training Videos</span>
+                    </a>
+                </li>
+                <li class="border-b border-gray-200 dark:border-dark-third mt-6"></li>
+            </ul>
+
+            <div class="mt-auto p-6 text-sm text-gray-500 dark:text-dark-txt">
+                <a href="#">Privacy</a>
+                <span>.</span>
+                <a href="#">Terms</a>
+                <span>.</span>
+                <a href="#">Advertising</a>
+                <span>.</span>
+                <a href="#">Cookies</a>
+                <span>.</span>
+                <a href="#">Ad choices</a>
+                <span>.</span>
+                <a href="#">More</a>
+                <span>.</span>
+                <span>ScoutConnect © 2025</span>
+            </div>
+        </div>
+        <!-- END LEFT MENU -->
+
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 px-2">
+            <!-- ACHIEVEMENTS HEADER -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow mt-4 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold dark:text-dark-txt">My Achievements</h1>
+                    <button id="add-achievement-btn"
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full flex items-center">
+                        <i class='bx bx-plus mr-1'></i> Add Achievement
+                    </button>
+                </div>
+
+                <!-- FILTERS -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="px-3 py-1 bg-blue-500 text-white rounded-full text-sm">All</button>
+                    <button
+                        class="px-3 py-1 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full text-sm">Medals</button>
+                    <button
+                        class="px-3 py-1 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full text-sm">Awards</button>
+                    <button
+                        class="px-3 py-1 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full text-sm">Records</button>
+                    <button
+                        class="px-3 py-1 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full text-sm">Certifications</button>
+                </div>
+            </div>
+            <!-- END ACHIEVEMENTS HEADER -->
+
+            <!-- ACHIEVEMENTS LIST -->
+            <div class="mt-4 space-y-4">
+                <div id="achievements-container" class="mt-4 space-y-4">
+                    <!-- Achievements will be loaded here dynamically -->
+                    <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                        <i class='bx bx-trophy text-4xl mb-2'></i>
+                        <p>No achievements yet. Add your first achievement!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- END ACHIEVEMENTS LIST -->
+        </div>
+        <!-- END MAIN CONTENT -->
+
+        <!-- RIGHT MENU -->
+        <div class="w-1/5 h-full hidden xl:block px-4 fixed top-0 right-0 pt-16">
+            <!-- ACHIEVEMENT SUMMARY -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mb-4">
+                <h2 class="font-bold dark:text-dark-txt mb-3">Achievement Summary</h2>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">Total Achievements</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">14</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">International</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">3</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                            <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 21%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">National</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">5</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                            <div class="bg-gray-500 h-2.5 rounded-full" style="width: 36%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">League/Club</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">6</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                            <div class="bg-amber-600 h-2.5 rounded-full" style="width: 43%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACHIEVEMENT TYPES -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4">
+                <h2 class="font-bold dark:text-dark-txt mb-3">By Achievement Type</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class='bx bx-medal text-yellow-500 mr-2'></i>
+                            <span class="text-sm dark:text-dark-txt">Medals</span>
+                        </div>
+                        <span class="text-sm font-semibold dark:text-dark-txt">7</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class='bx bx-trophy text-gray-500 mr-2'></i>
+                            <span class="text-sm dark:text-dark-txt">Awards</span>
+                        </div>
+                        <span class="text-sm font-semibold dark:text-dark-txt">4</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class='bx bx-award text-amber-600 mr-2'></i>
+                            <span class="text-sm dark:text-dark-txt">Records</span>
+                        </div>
+                        <span class="text-sm font-semibold dark:text-dark-txt">2</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class='bx bx-certification text-blue-500 mr-2'></i>
+                            <span class="text-sm dark:text-dark-txt">Certifications</span>
+                        </div>
+                        <span class="text-sm font-semibold dark:text-dark-txt">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END RIGHT MENU -->
+    </div>
+    <!-- END MAIN -->
+
+    <!-- ADD ACHIEVEMENT MODAL -->
+    <div id="add-achievement-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-dark-second rounded-lg shadow-lg w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Add New Achievement</h2>
+                    <button id="close-achievement-modal" class="text-gray-500 hover:text-gray-700 dark:text-dark-txt">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                </div>
+
+                <form id="achievement-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Achievement Type</label>
+                        <select
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                            <option value="medal">Medal</option>
+                            <option value="award">Award</option>
+                            <option value="record">Record</option>
+                            <option value="certification">Certification</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Title</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="e.g., Gold Medal - U-17 African Championship">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Description</label>
+                        <textarea rows="3"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="Describe your achievement"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Date</label>
+                            <input type="date"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Location</label>
+                            <input type="text"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                                placeholder="City, Country">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Tags</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="Add tags (comma separated)">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Upload Evidence</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label
+                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer dark:border-dark-third">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class='bx bx-cloud-upload text-3xl text-gray-500 dark:text-dark-txt mb-2'></i>
+                                    <p class="text-sm text-gray-500 dark:text-dark-txt">Click to upload or drag and drop
+                                    </p>
+                                </div>
+                                <input type="file" class="hidden" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-achievement"
+                            class="px-4 py-2 border rounded-lg text-gray-700 dark:text-dark-txt hover:bg-gray-100 dark:hover:bg-dark-third">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save
+                            Achievement</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END ADD ACHIEVEMENT MODAL -->
+
+    <script src="/frontend/script.js"></script>
+    <script>
+        async function loadAchievements() {
+            try {
+                const response = await fetch('/api/athlete/achievements', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load achievements');
+
+                const achievements = await response.json();
+                const container = document.getElementById('achievements-container');
+
+                if (achievements.length === 0) {
+                    container.innerHTML = `
+                <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                    <i class='bx bx-trophy text-4xl mb-2'></i>
+                    <p>No achievements yet. Add your first achievement!</p>
+                </div>
+            `;
+                    return;
+                }
+
+                container.innerHTML = achievements.map(achievement => `
+            <div class="achievement-card bg-white dark:bg-dark-second rounded-lg shadow p-6">
+                <div class="flex items-start">
+                    <div class="badge-icon bg-gradient-to-r from-${achievement.type === 'medal' ? 'yellow-400 to-yellow-500' :
+                        achievement.type === 'award' ? 'gray-400 to-gray-500' :
+                            'blue-400 to-blue-500'} text-white mr-4">
+                        <i class='bx ${achievement.type === 'medal' ? 'bx-medal' :
+                        achievement.type === 'award' ? 'bx-trophy' :
+                            'bx-certification'} text-3xl'></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold dark:text-dark-txt">${achievement.title}</h3>
+                                <p class="text-gray-500 dark:text-dark-txt text-sm">${achievement.subtitle || ''}</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="text-gray-400 hover:text-blue-500 dark:text-dark-txt edit-achievement" data-id="${achievement.id}">
+                                    <i class='bx bx-edit'></i>
+                                </button>
+                                <button class="text-gray-400 hover:text-red-500 dark:text-dark-txt delete-achievement" data-id="${achievement.id}">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-dark-txt">${achievement.description}</p>
+                        ${achievement.tags ? `
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            ${achievement.tags.map(tag => `
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">${tag}</span>
+                            `).join('')}
+                        </div>` : ''}
+                        <div class="mt-3 flex items-center text-sm text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-calendar mr-1'></i> ${achievement.date}
+                            ${achievement.location ? `<i class='bx bx-map ml-3 mr-1'></i> ${achievement.location}` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+            } catch (error) {
+                console.error('Error loading achievements:', error);
+            }
+        }
+
+        // Achievement modal functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const addAchievementBtn = document.querySelector('.bg-blue-500.hover\\:bg-blue-600');
+            const closeAchievementModal = document.getElementById('close-achievement-modal');
+            const cancelAchievement = document.getElementById('cancel-achievement');
+            const addAchievementModal = document.getElementById('add-achievement-modal');
+            loadRandomScouts();
+
+            if (addAchievementBtn) {
+                addAchievementBtn.addEventListener('click', function () {
+                    addAchievementModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeAchievementModal) {
+                closeAchievementModal.addEventListener('click', function () {
+                    addAchievementModal.classList.add('hidden');
+                });
+            }
+
+            if (cancelAchievement) {
+                cancelAchievement.addEventListener('click', function () {
+                    addAchievementModal.classList.add('hidden');
+                });
+            }
+
+            // Close modal when clicking outside
+            addAchievementModal.addEventListener('click', function (e) {
+                if (e.target === addAchievementModal) {
+                    addAchievementModal.classList.add('hidden');
+                }
+            });
+
+            // Form submission
+            const achievementForm = document.getElementById('achievement-form');
+            if (achievementForm) {
+                achievementForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    // Here you would typically send the data to the server
+                    console.log('Achievement form submitted');
+                    addAchievementModal.classList.add('hidden');
+                    // Show success message
+                    alert('Achievement added successfully!');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .profile-section {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-section.dark {
+            background-color: #1e293b;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .profile-label.dark {
+            color: #94a3b8;
+        }
+
+        .profile-value {
+            color: #1f2937;
+        }
+
+        .profile-value.dark {
+            color: #e2e8f0;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-actions {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 1rem;
+            }
+
+            .profile-nav {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .profile-nav a {
+                padding: 0.75rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV -->
+    <nav
+        class="bg-white dark:bg-dark-second h-max md:h-14 w-full shadow flex flex-col md:flex-row items-center justify-center md:justify-between fixed top-0 z-50 border-b dark:border-dark-third">
+        <!-- LEFT NAV -->
+        <div class="flex items-center justify-between w-full md:w-max px-4 py-2">
+            <a href="#" class="mr-2 hidden md:inline-block">
+                <img src="./images/sc-logo.png" alt="ScoutConnect logo" class="w-24 sm:w-20 lg:w-10 h-auto">
+            </a>
+            <div class="flex items-center justify-between space-x-1">
+                <div
+                    class="relative bg-gray-100 dark:bg-dark-third px-2 py-2 w-10 h-10 sm:w-11 sm:h-11 lg:h-10 lg:w-10 xl:w-max xl:pl-3 xl:pr-8 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class='bx bx-search-alt-2 text-xl xl:mr-2 dark:text-dark-txt'></i>
+                    <input type="text" placeholder="Search athletes..."
+                        class="outline-none bg-transparent hidden xl:inline-block">
+                </div>
+                <div
+                    class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt"
+                    id="dark-mode-toggle-mb">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT NAV -->
+
+        <!-- MAIN NAV -->
+        <ul class="flex w-full lg:w-max items-center justify-center">
+            <li class="w-1/5 md:w-max text-center">
+                <a href="scoutdashboard.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bxs-home' alt="Home"></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="athletes.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-user'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="/frontend/athlete/events.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-calendar'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center hidden md:inline-block">
+                <a href="reports.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-file'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center inline-block md:hidden">
+                <a href="#"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-menu'></i>
+                </a>
+            </li>
+        </ul>
+        <!-- END MAIN NAV -->
+
+        <!-- RIGHT NAV -->
+        <ul class="hidden md:flex mx-4 items-center justify-center">
+            <li class="h-full hidden xl:flex">
+                <a href="scout_profile.html"
+                    class="inline-flex items-center justify-center p-1 rounded-full hover:bg-gray-200 dark:hover:bg-dark-third mx-1">
+                    <img src="./images/profile.jpg" alt="Profile picture" class="rounded-full h-7 w-7">
+                    <span class="mx-2 font-semibold dark:text-dark-txt">Scout</span>
+                </a>
+            </li>
+            <li>
+                <button id="logout-btn"
+                    class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                    <i class='bx bx-log-out'></i>
+                </button>
+            </li>
+            <li>
+                <a href="/frontend/athlete/messages.html" class="group relative">
+                    <div
+                        class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300">
+                        <i class='bx bx-message-rounded'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/frontend/athlete/notifications.html" class="group relative">
+                    <div
+                        class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                        <i class='bx bxs-bell'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative"
+                    id="dark-mode-toggle">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END RIGHT NAV -->
+    </nav>
+    <!-- END NAV -->
+
+    <!-- MAIN CONTENT -->
+    <div class="flex justify-center h-screen pt-16">
+        <!-- LEFT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 left-0">
+            <ul class="p-4">
+                <li>
+                    <a href="scout_profile.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-user-circle text-2xl'></i>
+                        <span class="font-semibold">My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="athletes.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-search-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Find Athletes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="shortlists.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-star text-2xl'></i>
+                        <span class="font-semibold">Shortlists</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-file text-2xl'></i>
+                        <span class="font-semibold">Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bar-chart-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Analytics</span>
+                    </a>
+                </li>
+                <li class="border-b border-gray-200 dark:border-dark-third mt-6"></li>
+            </ul>
+            <div class="mt-auto p-6 text-sm text-gray-500 dark:text-dark-txt">
+                <a href="#">Privacy</a>
+                <span>.</span>
+                <a href="#">Terms</a>
+                <span>.</span>
+                <a href="#">Advertising</a>
+                <span>.</span>
+                <a href="#">Cookies</a>
+                <span>.</span>
+                <a href="#">Ad choices</a>
+                <span>.</span>
+                <a href="#">More</a>
+                <span>.</span>
+                <span>ScoutConnect © 2025</span>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 px-2 xl:ml-[20%]">
+            <!-- PROFILE HEADER -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow mt-4">
+                <div class="relative">
+                    <!-- COVER PHOTO -->
+                    <div class="h-48 bg-gradient-to-r from-red-500 to-white rounded-t-lg"></div>
+
+                    <!-- PROFILE INFO -->
+                    <div class="flex flex-col md:flex-row items-start md:items-end px-6 pb-6 -mt-16 profile-header">
+                        <img src="/frontend/images/profile.jpg" alt="Profile picture"
+                            class="w-32 h-32 rounded-full border-4 border-white dark:border-dark-second">
+                        <div class="ml-0 md:ml-6 mt-4 md:mt-0">
+                            <div class="flex items-center">
+                                <h1 class="text-2xl font-bold dark:text-dark-txt" id="scout-organization">Arsenal FC
+                                    Scouting Network</h1>
+                            </div>
+                            <p class="text-gray-600 dark:text-dark-txt" id="scout-location">Professional Football Club •
+                                London, UK</p>
+                            <p class="text-gray-500 dark:text-dark-txt text-sm"><span id="scout-count">12</span> scouts
+                                • <span id="athlete-count">245</span> athletes tracked</p>
+                            <div class="flex mt-2 space-x-2 profile-actions">
+                                <button id="edit-profile-btn"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-full text-sm flex items-center">
+                                    <i class='bx bx-edit mr-1'></i> Edit Profile
+                                </button>
+                                <button
+                                    class="bg-gray-200 hover:bg-gray-300 dark:bg-dark-third dark:hover:bg-dark-main dark:text-dark-txt px-4 py-1 rounded-full text-sm flex items-center">
+                                    <i class='bx bx-share-alt mr-1'></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABOUT SECTION -->
+            <div class="profile-section dark:bg-dark-second">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">About Our Scouting Network</h2>
+                    <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400">
+                        <i class='bx bx-edit'></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-gray-600 dark:text-dark-txt mb-2">
+                            <span class="font-semibold">Headquarters:</span> <span id="scout-headquarters">London,
+                                UK</span>
+                        </p>
+                        <p class="text-gray-600 dark:text-dark-txt mb-2">
+                            <span class="font-semibold">Primary Contact:</span> <span
+                                id="scout-contact">scouting@arsenal.com</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 dark:text-dark-txt mb-2">
+                            <span class="font-semibold">Focus Areas:</span> <span id="scout-focus">U-15 to U-23
+                                players</span>
+                        </p>
+                        <p class="text-gray-600 dark:text-dark-txt mb-2">
+                            <span class="font-semibold">Active Since:</span> <span id="scout-active">2015</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCOUTING STATS -->
+            <div class="profile-section dark:bg-dark-second">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Scouting Statistics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="stat-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg">
+                        <h3 class="font-semibold dark:text-dark-txt mb-3">Recent Activity</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">Athletes Viewed (30d)</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt" id="athletes-viewed">142</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-blue-500" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">Reports Completed</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt"
+                                        id="reports-completed">68</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">Tryouts Arranged</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt" id="tryouts-arranged">24</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-purple-500" style="width: 20%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg">
+                        <h3 class="font-semibold dark:text-dark-txt mb-3">Success Metrics</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">Academy Signings</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt" id="academy-signings">18</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-yellow-500" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">First Team Players</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt"
+                                        id="first-team-players">5</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-red-500" style="width: 10%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">International Caps</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt"
+                                        id="international-caps">32</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 65%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCOUT TEAM -->
+            <div class="profile-section dark:bg-dark-second">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Scouting Team</h2>
+                    <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400" id="add-scout-btn">
+                        <i class='bx bx-plus'></i> Add Scout
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="scouts-container">
+                    <!-- Scouts will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT MENU -->
+        <div class="w-1/5 h-full hidden xl:block px-4 fixed top-0 right-0 pt-16">
+            <!-- UPCOMING EVENTS -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mb-4">
+                <h2 class="font-bold dark:text-dark-txt mb-3">Upcoming Events</h2>
+                <div class="space-y-3" id="upcoming-events">
+                    <!-- Events will be loaded here -->
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="events.html" class="text-blue-500 text-sm font-medium hover:underline">View all events</a>
+                </div>
+            </div>
+
+            <!-- RECENT ACTIVITY -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-6 mb-4">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Recent Activity</h2>
+                <div class="space-y-4" id="recent-activity">
+                    <!-- Activity will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div id="edit-profile-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-dark-second rounded-lg shadow-lg w-full max-w-2xl max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Edit Profile</h2>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:text-dark-txt">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                </div>
+
+                <form id="profile-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Organization Name</label>
+                        <input type="text" id="edit-organization"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Location</label>
+                            <input type="text" id="edit-location"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Contact Email</label>
+                            <input type="email" id="edit-contact"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Description</label>
+                        <textarea id="edit-description" rows="3"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Focus Areas</label>
+                            <input type="text" id="edit-focus"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Active Since</label>
+                            <input type="text" id="edit-active"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-edit"
+                            class="px-4 py-2 border rounded-lg text-gray-700 dark:text-dark-txt hover:bg-gray-100 dark:hover:bg-dark-third">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save
+                            Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD SCOUT MODAL -->
+    <div id="add-scout-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-dark-second rounded-lg shadow-lg w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Add Scout</h2>
+                    <button id="close-scout-modal" class="text-gray-500 hover:text-gray-700 dark:text-dark-txt">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                </div>
+                <form id="scout-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Full Name</label>
+                        <input type="text" id="scout-name"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Email</label>
+                        <input type="email" id="scout-email"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Region</label>
+                        <input type="text" id="scout-region"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-scout"
+                            class="px-4 py-2 border rounded-lg text-gray-700 dark:text-dark-txt hover:bg-gray-100 dark:hover:bg-dark-third">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Add
+                            Scout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Get token from localStorage
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/frontend/login.html';
+                return;
+            }
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function () {
+                localStorage.removeItem('token');
+                window.location.href = '/frontend/login.html';
+            });
+
+            // Modal elements
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const editProfileModal = document.getElementById('edit-profile-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const cancelEditBtn = document.getElementById('cancel-edit');
+            const profileForm = document.getElementById('profile-form');
+
+            // Scout modal elements
+            const addScoutBtn = document.getElementById('add-scout-btn');
+            const addScoutModal = document.getElementById('add-scout-modal');
+            const closeScoutModalBtn = document.getElementById('close-scout-modal');
+            const cancelScoutBtn = document.getElementById('cancel-scout');
+            const scoutForm = document.getElementById('scout-form');
+
+            // Load profile data
+            async function loadProfileData() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/profile', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to load profile');
+                    }
+
+                    const data = await response.json();
+                    populateProfileUI(data);
+                    populateEditForm(data);
+                    loadScouts();
+                    loadUpcomingEvents();
+                    loadRecentActivity();
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                }
+            }
+
+            // Populate profile UI
+            function populateProfileUI(data) {
+                // Basic profile info
+                document.getElementById('scout-organization').textContent = data.profile.organization || 'No organization';
+                document.getElementById('scout-location').textContent = `${data.profile.scout_type || 'Scouting Network'} • ${data.profile.country || 'No location'}`;
+
+                // About section
+                document.getElementById('scout-headquarters').textContent = data.profile.country || 'Not specified';
+                document.getElementById('scout-contact').textContent = data.email || 'Not specified';
+                document.getElementById('scout-focus').textContent = data.profile.scout_type || 'Not specified';
+
+                // Use the created_at date for "Active Since"
+                if (data.created_at) {
+                    const activeYear = new Date(data.created_at).getFullYear();
+                    document.getElementById('scout-active').textContent = activeYear;
+                } else {
+                    document.getElementById('scout-active').textContent = 'Not specified';
+                }
+
+                // Stats - using data from the profile endpoint
+                document.getElementById('athletes-viewed').textContent = data.profile.reports_count || '0';
+                document.getElementById('reports-completed').textContent = data.profile.reports_count || '0';
+                document.getElementById('shortlisted-count').textContent = data.profile.shortlisted_count || '0';
+
+                document.getElementById('tryouts-arranged').textContent = '0'; // Placeholder
+                document.getElementById('academy-signings').textContent = '0'; // Placeholder
+                document.getElementById('first-team-players').textContent = '0'; // Placeholder
+                document.getElementById('international-caps').textContent = '0'; // Placeholder
+            }
+
+            // Load scouts
+            async function loadScouts() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/scouts', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to load scouts');
+                    }
+
+                    const scouts = await response.json();
+                    displayScouts(scouts);
+                } catch (error) {
+                    console.error('Error loading scouts:', error);
+                    // Fallback to mock data
+                    const mockScouts = [
+                        { id: 1, name: 'John Smith', region: 'Africa', email: 'john@arsenal.com' },
+                        { id: 2, name: 'Sarah Johnson', region: 'West Africa', email: 'sarah@arsenal.com' },
+                        { id: 3, name: 'Michael Brown', region: 'East Africa', email: 'michael@arsenal.com' }
+                    ];
+                    displayScouts(mockScouts);
+                }
+            }
+
+            function displayScouts(scouts) {
+                const container = document.getElementById('scouts-container');
+
+                if (scouts.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-3 text-center py-4 text-gray-500 dark:text-dark-txt">
+                            No scouts added yet
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = scouts.map(scout => `
+                    <div class="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-dark-third rounded-lg cursor-pointer">
+                        <img src="./images/scout-${scout.id % 3 + 1}.jpg" alt="Scout" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <h3 class="font-medium dark:text-dark-txt">${scout.name}</h3>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">${scout.region}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Load upcoming events
+            async function loadUpcomingEvents() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/events/upcoming', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to load events');
+                    }
+
+                    const events = await response.json();
+                    displayEvents(events);
+                } catch (error) {
+                    console.error('Error loading events:', error);
+                    // Fallback to mock data
+                    const mockEvents = [
+                        {
+                            id: 1,
+                            title: "Regional Tryouts",
+                            type: "tryout",
+                            location: "City Stadium",
+                            date: new Date(Date.now() + 86400000 * 7).toISOString(),
+                            organization: "National Scouts"
+                        },
+                        {
+                            id: 2,
+                            title: "Training Camp",
+                            type: "training",
+                            location: "Sports Complex",
+                            date: new Date(Date.now() + 86400000 * 14).toISOString(),
+                            organization: "Elite Academy"
+                        }
+                    ];
+                    displayEvents(mockEvents);
+                }
+            }
+
+            function displayEvents(events) {
+                const container = document.getElementById('upcoming-events');
+
+                if (events.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-4 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-calendar-event text-3xl mb-2'></i>
+                            <p>No upcoming events</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = events.map(event => `
+                    <div class="flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-third p-2 rounded-lg">
+                        <div class="w-10 h-10 ${event.type === 'training' ? 'bg-blue-100 dark:bg-blue-900' : 'bg-green-100 dark:bg-green-900'} rounded-lg mr-3 flex items-center justify-center">
+                            <i class='bx ${event.type === 'training' ? 'bx-football' : 'bx-calendar'} ${event.type === 'training' ? 'text-blue-500 dark:text-blue-300' : 'text-green-500 dark:text-green-300'}'></i>
+                        </div>
+                        <div>
+                            <p class="font-medium dark:text-dark-txt">${event.title}</p>
+                            <p class="text-xs text-gray-500 dark:text-dark-txt">${new Date(event.date).toLocaleDateString()} • ${event.location}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Load recent activity
+            async function loadRecentActivity() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/scouting-activity', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to load activity');
+                    }
+
+                    const activity = await response.json();
+                    displayActivity(activity);
+                } catch (error) {
+                    console.error('Error loading activity:', error);
+                    // Fallback to mock data
+                    const mockActivity = [
+                        { scout_name: 'John Smith', athlete_name: 'Michael Johnson', action: 'viewed', timestamp: new Date(Date.now() - 3600000) },
+                        { scout_name: 'Sarah Johnson', athlete_name: 'David Williams', action: 'shortlisted', timestamp: new Date(Date.now() - 7200000) },
+                        { scout_name: 'Michael Brown', athlete_name: 'James Smith', action: 'created report on', timestamp: new Date(Date.now() - 86400000) }
+                    ];
+                    displayActivity(mockActivity);
+                }
+            }
+
+            function displayActivity(activity) {
+                const container = document.getElementById('recent-activity');
+
+                if (activity.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-4 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-time text-3xl mb-2'></i>
+                            <p>No recent activity</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = activity.map(item => `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-dark-third flex items-center justify-center">
+                                <i class='bx bx-user text-gray-600 dark:text-dark-txt'></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm dark:text-dark-txt">
+                                <span class="font-medium">${item.scout_name}</span> 
+                                ${item.action} 
+                                <span class="font-medium">${item.athlete_name}</span>
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-dark-txt">${formatTimeAgo(new Date(item.timestamp))}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function formatTimeAgo(date) {
+                const now = new Date();
+                const diffInSeconds = Math.floor((now - date) / 1000);
+
+                if (diffInSeconds < 60) {
+                    return `${diffInSeconds}s ago`;
+                } else if (diffInSeconds < 3600) {
+                    const minutes = Math.floor(diffInSeconds / 60);
+                    return `${minutes}m ago`;
+                } else if (diffInSeconds < 86400) {
+                    const hours = Math.floor(diffInSeconds / 3600);
+                    return `${hours}h ago`;
+                } else {
+                    const days = Math.floor(diffInSeconds / 86400);
+                    return `${days}d ago`;
+                }
+            }
+
+            // Modal functionality
+            editProfileBtn.addEventListener('click', function () {
+                editProfileModal.classList.remove('hidden');
+            });
+
+            closeModalBtn.addEventListener('click', function () {
+                editProfileModal.classList.add('hidden');
+            });
+
+            cancelEditBtn.addEventListener('click', function () {
+                editProfileModal.classList.add('hidden');
+            });
+
+            editProfileModal.addEventListener('click', function (e) {
+                if (e.target === editProfileModal) {
+                    editProfileModal.classList.add('hidden');
+                }
+            });
+
+            // Scout modal functionality
+            addScoutBtn.addEventListener('click', function () {
+                addScoutModal.classList.remove('hidden');
+            });
+
+            closeScoutModalBtn.addEventListener('click', function () {
+                addScoutModal.classList.add('hidden');
+            });
+
+            cancelScoutBtn.addEventListener('click', function () {
+                addScoutModal.classList.add('hidden');
+            });
+
+            addScoutModal.addEventListener('click', function (e) {
+                if (e.target === addScoutModal) {
+                    addScoutModal.classList.add('hidden');
+                }
+            });
+
+            // Form submission
+            profileForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                try {
+                    const formData = {
+                        organization: document.getElementById('edit-organization').value,
+                        country: document.getElementById('edit-location').value,
+                        contact: document.getElementById('edit-contact').value,
+                        description: document.getElementById('edit-description').value,
+                        focus_areas: document.getElementById('edit-focus').value,
+                        active_since: document.getElementById('edit-active').value
+                    };
+
+                    const response = await fetch('http://localhost:3000/api/profile', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to update profile');
+                    }
+
+                    // Refresh profile data
+                    await loadProfileData();
+
+                    // Show success message
+                    alert('Profile updated successfully!');
+
+                    // Close the modal
+                    editProfileModal.classList.add('hidden');
+                } catch (error) {
+                    console.error('Profile update error:', error);
+                    alert(error.message || 'Failed to update profile');
+                }
+            });
+
+            // Scout form submission
+            scoutForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                try {
+                    const formData = {
+                        name: document.getElementById('scout-name').value,
+                        email: document.getElementById('scout-email').value,
+                        region: document.getElementById('scout-region').value
+                    };
+
+                    const response = await fetch('http://localhost:3000/api/scouts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to add scout');
+                    }
+
+                    // Refresh scouts list
+                    await loadScouts();
+
+                    // Show success message
+                    alert('Scout added successfully!');
+
+                    // Close the modal and reset form
+                    addScoutModal.classList.add('hidden');
+                    this.reset();
+                } catch (error) {
+                    console.error('Error adding scout:', error);
+                    alert(error.message || 'Failed to add scout');
+                }
+            });
+
+            // Initial load
+            loadProfileData();
+        });
+    </script>
+</body>
+
+</html>

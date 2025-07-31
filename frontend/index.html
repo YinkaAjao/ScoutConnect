@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoutConnect - Connecting African Talent with Global Opportunities</title>
+    <link rel="shortcut icon" href="./images/sc-logo.png" type="image/png">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./tailwind/tailwind.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .floating-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+
+    <!-- Simple Navbar -->
+    <nav
+        class="bg-white dark:bg-dark-second h-16 w-full shadow flex items-center justify-between fixed top-0 z-50 px-4 border-b dark:border-dark-third">
+        <!-- Left side - Logo -->
+        <div class="flex items-center">
+            <span class="ml-2 font-bold text-xl dark:text-dark-txt">ScoutConnect</span>
+            </a>
+        </div>
+
+        <!-- Right side - Login and Dark Mode -->
+        <div class="flex items-center space-x-4">
+            <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300"
+                id="dark-mode-toggle">
+                <i class='bx bxs-moon'></i>
+            </div>
+            <a href="login.html"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all">
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-12 md:pt-40 md:pb-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight dark:text-dark-txt">
+                        The Global <span class="hero-gradient">Sports</span> Networking <span
+                            class="text-blue-500 dark:text-blue-400">Platform</span>
+                    </h1>
+
+                    <p class="mt-6 text-lg md:text-xl text-gray-600 dark:text-dark-txt max-w-2xl mx-auto lg:mx-0">
+                        Where African athletes showcase their talent and scouts build their networks.
+                        Create your profile, discover opportunities, and connect with the global
+                        sports community - whether you're an athlete or a scout.
+                    </p>
+
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="signup.html"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center transition-all">
+                            Join the Network
+                            <i class='bx bx-arrow-right ml-2 text-xl'></i>
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="mt-12 grid grid-cols-3 gap-8 text-center lg:text-left">
+                        <div>
+                            <div class="text-2xl md:text-3xl font-bold text-blue-500 dark:text-blue-400">1000+</div>
+                            <div class="text-sm text-gray-500 dark:text-dark-txt">Active Members</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-3xl font-bold text-green-500 dark:text-green-400">500+</div>
+                            <div class="text-sm text-gray-500 dark:text-dark-txt">Connections Made</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-3xl font-bold text-blue-500 dark:text-blue-400">25</div>
+                            <div class="text-sm text-gray-500 dark:text-dark-txt">Countries</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50 dark:bg-dark-second">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 dark:text-dark-txt">
+                    Built for <span class="text-blue-500 dark:text-blue-400">Sports Networking</span>
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-dark-txt max-w-2xl mx-auto">
+                    Whether you're an athlete seeking opportunities or a scout building your network,
+                    our platform connects the global sports community.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-user text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Dual Profile System</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Athletes showcase talent with stats and videos. Scouts build networks with their experience and
+                        connections.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-search text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Smart Discovery</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Find athletes by skill level, or discover scouts by expertise, leagues, and reputation.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-message-rounded text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Network Building</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Direct messaging between athletes and scouts, plus scout-to-scout networking for referrals.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-bar-chart-alt-2 text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Network Analytics</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Track profile engagement, network growth, and connection success for both athletes and scouts.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-shield text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Verified Community</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Verified athlete and scout profiles ensure authentic networking and maintain platform trust.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div
+                    class="feature-card bg-white dark:bg-dark-second shadow rounded-lg p-6 transition-all duration-300">
+                    <div class="mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+                            <i class='bx bx-globe text-xl'></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-dark-txt">Global Sports Network</h3>
+                    <p class="text-gray-600 dark:text-dark-txt">
+                        Connect across continents - athletes finding opportunities, scouts expanding their networks
+                        worldwide.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Dark/Light Mode Toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+            // Check for saved user preference or use system preference
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            darkModeToggle.addEventListener('click', function () {
+                const isDark = document.documentElement.classList.contains('dark');
+
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.innerHTML = '<i class="bx bx-sun"></i>';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.innerHTML = '<i class="bx bxs-moon"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

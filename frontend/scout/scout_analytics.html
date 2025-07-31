@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .chart-container {
+            height: 300px;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+        }
+        .metric-card {
+            transition: all 0.2s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV (Same as previous) -->
+    
+    <!-- MAIN CONTENT -->
+    <div class="flex justify-center h-screen pt-16">
+        <!-- LEFT MENU (Same as previous) -->
+        
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 px-2">
+            <!-- DASHBOARD HEADER -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Scouting Analytics</h2>
+                    <div class="flex space-x-2">
+                        <select class="px-3 py-1 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt text-sm">
+                            <option>Last 30 Days</option>
+                            <option>Last 90 Days</option>
+                            <option>Last Year</option>
+                            <option>All Time</option>
+                        </select>
+                        <button class="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm flex items-center">
+                            <i class='bx bx-download mr-1'></i> Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY METRICS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                <div class="metric-card bg-white dark:bg-dark-second shadow rounded-lg p-4">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Athletes Tracked</p>
+                            <p class="text-2xl font-bold dark:text-white">1,245</p>
+                        </div>
+                        <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-2 rounded-lg">
+                            <i class='bx bx-user text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-green-500 text-sm font-medium">↑ 12%</span>
+                        <span class="text-gray-500 dark:text-dark-txt text-sm ml-1">vs last period</span>
+                    </div>
+                </div>
+                <div class="metric-card bg-white dark:bg-dark-second shadow rounded-lg p-4">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Shortlisted</p>
+                            <p class="text-2xl font-bold dark:text-white">342</p>
+                        </div>
+                        <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 p-2 rounded-lg">
+                            <i class='bx bx-bookmark text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-green-500 text-sm font-medium">↑ 8%</span>
+                        <span class="text-gray-500 dark:text-dark-txt text-sm ml-1">vs last period</span>
+                    </div>
+                </div>
+                <div class="metric-card bg-white dark:bg-dark-second shadow rounded-lg p-4">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Reports Completed</p>
+                            <p class="text-2xl font-bold dark:text-white">218</p>
+                        </div>
+                        <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 p-2 rounded-lg">
+                            <i class='bx bx-clipboard text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-red-500 text-sm font-medium">↓ 3%</span>
+                        <span class="text-gray-500 dark:text-dark-txt text-sm ml-1">vs last period</span>
+                    </div>
+                </div>
+                <div class="metric-card bg-white dark:bg-dark-second shadow rounded-lg p-4">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Signings</p>
+                            <p class="text-2xl font-bold dark:text-white">18</p>
+                        </div>
+                        <div class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 p-2 rounded-lg">
+                            <i class='bx bx-check-circle text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-green-500 text-sm font-medium">↑ 22%</span>
+                        <span class="text-gray-500 dark:text-dark-txt text-sm ml-1">vs last period</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTIVITY CHART -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Scouting Activity</h2>
+                <div class="chart-container">
+                    <!-- Chart would be implemented with Chart.js or similar -->
+                    <div class="w-full h-full flex items-center justify-center text-gray-500">
+                        <p>Interactive chart would appear here showing scouting activity over time</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGIONAL BREAKDOWN -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Regional Breakdown</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="chart-container">
+                        <!-- Pie chart would go here -->
+                        <div class="w-full h-full flex items-center justify-center text-gray-500">
+                            <p>Pie chart showing athlete distribution by region</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">West Africa</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt">42%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-blue-500" style="width: 42%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">East Africa</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt">28%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 28%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">Southern Africa</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt">18%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-purple-500" style="width: 18%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium dark:text-dark-txt">North Africa</span>
+                                    <span class="text-sm font-medium dark:text-dark-txt">12%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-yellow-500" style="width: 12%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCOUT PERFORMANCE -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Scout Performance</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b dark:border-dark-third">
+                                <th class="text-left py-2 dark:text-dark-txt">Scout</th>
+                                <th class="text-right py-2 dark:text-dark-txt">Athletes</th>
+                                <th class="text-right py-2 dark:text-dark-txt">Reports</th>
+                                <th class="text-right py-2 dark:text-dark-txt">Signings</th>
+                                <th class="text-right py-2 dark:text-dark-txt">Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b dark:border-dark-third hover:bg-gray-100 dark:hover:bg-dark-third">
+                                <td class="py-3 flex items-center">
+                                    <img src="./images/scout-1.jpg" alt="Scout" class="w-8 h-8 rounded-full mr-2">
+                                    <span class="dark:text-dark-txt">John Smith</span>
+                                </td>
+                                <td class="text-right dark:text-dark-txt">245</td>
+                                <td class="text-right dark:text-dark-txt">68</td>
+                                <td class="text-right dark:text-dark-txt">5</td>
+                                <td class="text-right">
+                                    <div class="flex justify-end">
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-gray-300'></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b dark:border-dark-third hover:bg-gray-100 dark:hover:bg-dark-third">
+                                <td class="py-3 flex items-center">
+                                    <img src="./images/scout-2.jpg" alt="Scout" class="w-8 h-8 rounded-full mr-2">
+                                    <span class="dark:text-dark-txt">Sarah Johnson</span>
+                                </td>
+                                <td class="text-right dark:text-dark-txt">198</td>
+                                <td class="text-right dark:text-dark-txt">56</td>
+                                <td class="text-right dark:text-dark-txt">7</td>
+                                <td class="text-right">
+                                    <div class="flex justify-end">
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-100 dark:hover:bg-dark-third">
+                                <td class="py-3 flex items-center">
+                                    <img src="./images/scout-3.jpg" alt="Scout" class="w-8 h-8 rounded-full mr-2">
+                                    <span class="dark:text-dark-txt">Michael Brown</span>
+                                </td>
+                                <td class="text-right dark:text-dark-txt">176</td>
+                                <td class="text-right dark:text-dark-txt">42</td>
+                                <td class="text-right dark:text-dark-txt">3</td>
+                                <td class="text-right">
+                                    <div class="flex justify-end">
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-yellow-400'></i>
+                                        <i class='bx bxs-star text-gray-300'></i>
+                                        <i class='bx bxs-star text-gray-300'></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT MENU (Same as previous) -->
+    </div>
+</body>
+</html>

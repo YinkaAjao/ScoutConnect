@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .event-card {
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-type-indicator {
+            width: 8px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .calendar-day {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .calendar-day.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .calendar-day.has-event {
+            position: relative;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 6px;
+            height: 6px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV -->
+    <nav
+        class="bg-white dark:bg-dark-second h-max md:h-14 w-full shadow flex flex-col md:flex-row items-center justify-center md:justify-between fixed top-0 z-50 border-b dark:border-dark-third">
+
+        <!-- LEFT NAV -->
+        <div class="flex items-center justify-between w-full md:w-max px-4 py-2">
+            <a href="#" class="mr-2 hidden md:inline-block">
+                <img src="./images/sc-logo.png" alt="ScoutConnect logo" class="w-24 sm:w-20 lg:w-10 h-auto">
+            </a>
+            <a href="#" class="inline-block md:hidden">
+                <img src="./images/sc-logo-mb.png" alt="" class="w-32 h-auto">
+            </a>
+            <div class="flex items-center justify-between space-x-1">
+                <div
+                    class="relative bg-gray-100 dark:bg-dark-third px-2 py-2 w-10 h-10 sm:w-11 sm:h-11 lg:h-10 lg:w-10 xl:w-max xl:pl-3 xl:pr-8 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class='bx bx-search-alt-2 text-xl xl:mr-2 dark:text-dark-txt'></i>
+                    <input type="text" placeholder="Search events..."
+                        class="outline-none bg-transparent hidden xl:inline-block">
+                </div>
+                <div
+                    class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt"
+                    id="dark-mode-toggle-mb">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT NAV -->
+
+        <!-- MAIN NAV -->
+        <ul class="flex w-full lg:w-max items-center justify-center">
+            <li class="w-1/5 md:w-max text-center">
+                <a href="athletedashboard.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bxs-home'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="achievements.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-trophy'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="events.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block text-blue-500 border-b-4 border-blue-500">
+                    <i class='bx bx-calendar'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center hidden md:inline-block">
+                <a href="videos.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-video'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center inline-block md:hidden">
+                <a href="#"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-menu'></i>
+                </a>
+            </li>
+        </ul>
+        <!-- END MAIN NAV -->
+
+        <!-- RIGHT NAV -->
+        <ul class="hidden md:flex mx-4 items-center justify-center">
+            <li>
+                <button id="logout-btn"
+                    class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                    <i class='bx bx-log-out'></i>
+                </button>
+                <script>
+                    document.getElementById('logout-btn').addEventListener('click', function () {
+                        localStorage.removeItem('token');
+                        window.location.href = '/frontend/login.html';
+                    });
+                </script>
+            </li>
+            <li>
+                <a href="messages.html" class="group relative">
+                    <div
+                        class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300">
+                        <i class='bx bx-message-rounded'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="notifications.html" class="group relative">
+                    <div
+                        class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                        <i class='bx bxs-bell'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative"
+                    id="dark-mode-toggle">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END RIGHT NAV -->
+    </nav>
+    <!-- END NAV -->
+
+    <!-- MAIN -->
+    <div class="flex justify-center h-screen pt-16">
+        <!-- LEFT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 left-0">
+            <ul class="p-4">
+                <li>
+                    <a href="athlete_profile.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-user-circle text-2xl'></i>
+                        <span class="font-semibold">My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-group text-2xl'></i>
+                        <span class="font-semibold">Connections</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-calendar-event text-2xl'></i>
+                        <span class="font-semibold">Events</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bar-chart-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Performance Stats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-video text-2xl'></i>
+                        <span class="font-semibold">Training Videos</span>
+                    </a>
+                </li>
+                <li class="border-b border-gray-200 dark:border-dark-third mt-6"></li>
+            </ul>
+            <div class="mt-auto p-6 text-sm text-gray-500 dark:text-dark-txt">
+                <a href="#">Privacy</a>
+                <span>.</span>
+                <a href="#">Terms</a>
+                <span>.</span>
+                <a href="#">Advertising</a>
+                <span>.</span>
+                <a href="#">Cookies</a>
+                <span>.</span>
+                <a href="#">Ad choices</a>
+                <span>.</span>
+                <a href="#">More</a>
+                <span>.</span>
+                <span>ScoutConnect © 2025</span>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 px-2">
+            <!-- EVENTS HEADER -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow mt-4 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold dark:text-dark-txt">Upcoming Events</h1>
+                    <div class="flex space-x-2">
+                        <button id="filter-btn"
+                            class="bg-gray-200 dark:bg-dark-third dark:text-dark-txt px-3 py-1 rounded-full text-sm flex items-center">
+                            <i class='bx bx-filter mr-1'></i> Filter
+                        </button>
+                        <button id="create-event-btn"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-full text-sm flex items-center hidden">
+                            <i class='bx bx-plus mr-1'></i> Create Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- EVENT TABS -->
+                <div class="flex border-b border-gray-200 dark:border-dark-third mb-6">
+                    <button class="event-tab px-4 py-2 text-blue-500 border-b-2 border-blue-500 font-medium"
+                        data-tab="upcoming">Upcoming</button>
+                    <button class="event-tab px-4 py-2 text-gray-500 dark:text-dark-txt hover:text-blue-500 font-medium"
+                        data-tab="past">Past</button>
+                    <button
+                        class="event-tab px-4 py-2 text-gray-500 dark:text-dark-txt hover:text-blue-500 font-medium hidden"
+                        data-tab="my-events" id="my-events-tab">My Events</button>
+                </div>
+
+                <!-- FILTERS DROPDOWN -->
+                <div id="filters-dropdown" class="hidden mb-4 p-4 bg-gray-50 dark:bg-dark-third rounded-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Event Type</label>
+                            <select id="event-type-filter"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-main dark:border-dark-third dark:text-dark-txt">
+                                <option value="">All Types</option>
+                                <option value="tryout">Tryout</option>
+                                <option value="showcase">Showcase</option>
+                                <option value="training">Training Camp</option>
+                                <option value="combine">Combine</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Sport</label>
+                            <select id="sport-filter"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-main dark:border-dark-third dark:text-dark-txt">
+                                <option value="">All Sports</option>
+                                <option value="soccer">Soccer</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="athletics">Athletics</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Date Range</label>
+                            <select id="date-range-filter"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-main dark:border-dark-third dark:text-dark-txt">
+                                <option value="all">All Dates</option>
+                                <option value="this_month">This Month</option>
+                                <option value="next_3_months">Next 3 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-4">
+                        <button id="apply-filters"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-full text-sm">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- END EVENTS HEADER -->
+
+            <!-- EVENTS LIST -->
+            <div id="events-list" class="mt-4 space-y-4">
+                <!-- Events will be loaded dynamically here -->
+                <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                    <i class='bx bx-loader-circle bx-spin text-4xl mb-2'></i>
+                    <p>Loading events...</p>
+                </div>
+            </div>
+            <!-- END EVENTS LIST -->
+        </div>
+        <!-- END MAIN CONTENT -->
+
+        <!-- RIGHT MENU -->
+        <div class="w-1/5 h-full hidden xl:block px-4 fixed top-0 right-0 pt-16">
+            <!-- CALENDAR WIDGET -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="calendar-month-year" class="font-bold dark:text-dark-txt"></h2>
+                    <div class="flex space-x-2">
+                        <button id="prev-month" class="text-gray-500 dark:text-dark-txt hover:text-blue-500">
+                            <i class='bx bx-chevron-left'></i>
+                        </button>
+                        <button id="next-month" class="text-gray-500 dark:text-dark-txt hover:text-blue-500">
+                            <i class='bx bx-chevron-right'></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-1 mb-2 text-center text-xs text-gray-500 dark:text-dark-txt">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+
+                <div id="calendar-days" class="grid grid-cols-7 gap-1 text-center text-sm">
+                    <!-- Calendar days will be populated by JavaScript -->
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-dark-third">
+                    <h3 class="text-sm font-semibold dark:text-dark-txt mb-2">Upcoming Events</h3>
+                    <div id="calendar-events-list" class="space-y-2">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END RIGHT MENU -->
+    </div>
+    <!-- END MAIN -->
+
+    <!-- CREATE EVENT MODAL -->
+    <div id="create-event-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-dark-second rounded-lg shadow-lg w-full max-w-2xl max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Create New Event</h2>
+                    <button id="close-event-modal" class="text-gray-500 hover:text-gray-700 dark:text-dark-txt">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                </div>
+
+                <form id="event-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Event Type</label>
+                        <select
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                            <option value="tryout">Tryout</option>
+                            <option value="showcase">Showcase</option>
+                            <option value="training">Training Camp</option>
+                            <option value="combine">Combine</option>
+                            <option value="tournament">Tournament</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Event Name</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="e.g., National Team Tryouts">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Description</label>
+                        <textarea rows="3"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="Describe the event"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Start Date</label>
+                            <input type="date"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">End Date</label>
+                            <input type="date"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Start Time</label>
+                            <input type="time"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">End Time</label>
+                            <input type="time"
+                                class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Location</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="Venue name and address">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Sport</label>
+                        <select
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                            <option value="soccer">Soccer</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="athletics">Athletics</option>
+                            <option value="swimming">Swimming</option>
+                            <option value="tennis">Tennis</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Tags</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt"
+                            placeholder="Add tags (comma separated)">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Event Image</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label
+                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer dark:border-dark-third">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class='bx bx-cloud-upload text-3xl text-gray-500 dark:text-dark-txt mb-2'></i>
+                                    <p class="text-sm text-gray-500 dark:text-dark-txt">Click to upload or drag and drop
+                                    </p>
+                                </div>
+                                <input type="file" class="hidden" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-event"
+                            class="px-4 py-2 border rounded-lg text-gray-700 dark:text-dark-txt hover:bg-gray-100 dark:hover:bg-dark-third">Cancel</button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Create Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get user type from local storage or authentication
+            const userType = localStorage.getItem('userType') || 'athlete';
+
+            // Show create event button for scouts
+            if (userType === 'scout') {
+                document.getElementById('create-event-btn').classList.remove('hidden');
+                document.getElementById('my-events-tab').classList.remove('hidden');
+            }
+
+            // Initialize variables
+            let currentDate = new Date();
+            let eventsData = [];
+            let currentTab = 'upcoming';
+            let currentFilters = {
+                type: '',
+                sport: '',
+                date_range: 'all'
+            };
+
+            // DOM elements
+            const eventsList = document.getElementById('events-list');
+            const calendarDays = document.getElementById('calendar-days');
+            const calendarMonthYear = document.getElementById('calendar-month-year');
+            const calendarEventsList = document.getElementById('calendar-events-list');
+            const filterBtn = document.getElementById('filter-btn');
+            const filtersDropdown = document.getElementById('filters-dropdown');
+            const eventTypeFilter = document.getElementById('event-type-filter');
+            const sportFilter = document.getElementById('sport-filter');
+            const dateRangeFilter = document.getElementById('date-range-filter');
+            const applyFiltersBtn = document.getElementById('apply-filters');
+            const eventTabs = document.querySelectorAll('.event-tab');
+
+            // Event listeners
+            filterBtn.addEventListener('click', toggleFilters);
+            applyFiltersBtn.addEventListener('click', applyFilters);
+            document.getElementById('prev-month').addEventListener('click', showPreviousMonth);
+            document.getElementById('next-month').addEventListener('click', showNextMonth);
+
+            eventTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    currentTab = tab.dataset.tab;
+                    eventTabs.forEach(t => t.classList.remove('text-blue-500', 'border-b-2', 'border-blue-500'));
+                    tab.classList.add('text-blue-500', 'border-b-2', 'border-blue-500');
+                    loadEvents();
+                });
+            });
+
+            // Initialize
+            renderCalendar();
+            loadEvents();
+
+            // Functions
+            function toggleFilters() {
+                filtersDropdown.classList.toggle('hidden');
+            }
+
+            function applyFilters() {
+                currentFilters = {
+                    type: eventTypeFilter.value,
+                    sport: sportFilter.value,
+                    date_range: dateRangeFilter.value
+                };
+                filtersDropdown.classList.add('hidden');
+                loadEvents();
+            }
+
+            function showPreviousMonth() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+                loadCalendarEvents();
+            }
+
+            function showNextMonth() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+                loadCalendarEvents();
+            }
+
+            function renderCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+
+                // Set month and year header
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                calendarMonthYear.textContent = `${monthNames[month]} ${year}`;
+
+                // Get first day of month and total days
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                // Clear previous calendar
+                calendarDays.innerHTML = '';
+
+                // Add empty cells for days before first day of month
+                for (let i = 0; i < firstDay; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'py-1 opacity-50';
+                    dayElement.textContent = new Date(year, month, -firstDay + i + 1).getDate();
+                    calendarDays.appendChild(dayElement);
+                }
+
+                // Add days of month
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'py-1 calendar-day';
+                    dayElement.textContent = i;
+
+                    // Check if day has events
+                    const dayDate = new Date(year, month, i);
+                    const hasEvent = eventsData.some(event => {
+                        const eventDate = new Date(event.start_date);
+                        return eventDate.getFullYear() === dayDate.getFullYear() &&
+                            eventDate.getMonth() === dayDate.getMonth() &&
+                            eventDate.getDate() === dayDate.getDate();
+                    });
+
+                    if (hasEvent) {
+                        dayElement.classList.add('has-event');
+                        dayElement.addEventListener('click', () => {
+                            filterEventsByDate(dayDate);
+                        });
+                    }
+
+                    // Highlight current day
+                    const today = new Date();
+                    if (dayDate.getFullYear() === today.getFullYear() &&
+                        dayDate.getMonth() === today.getMonth() &&
+                        dayDate.getDate() === today.getDate()) {
+                        dayElement.classList.add('active');
+                    }
+
+                    calendarDays.appendChild(dayElement);
+                }
+
+                // Fill remaining cells if needed
+                const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+                for (let i = daysInMonth + 1; i <= totalCells - firstDay; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'py-1 opacity-50';
+                    dayElement.textContent = i - daysInMonth;
+                    calendarDays.appendChild(dayElement);
+                }
+            }
+
+            function filterEventsByDate(date) {
+                const filteredEvents = eventsData.filter(event => {
+                    const eventDate = new Date(event.start_date);
+                    return eventDate.getFullYear() === date.getFullYear() &&
+                        eventDate.getMonth() === date.getMonth() &&
+                        eventDate.getDate() === date.getDate();
+                });
+
+                displayEvents(filteredEvents);
+            }
+
+            function loadEvents() {
+                const endpoint = userType === 'scout' ? '/api/events/scout' : '/api/events/athlete';
+
+                // Add tab-specific filters
+                const filters = { ...currentFilters };
+                if (currentTab === 'past') {
+                    filters.date_range = 'past';
+                } else if (currentTab === 'upcoming') {
+                    filters.date_range = 'upcoming';
+                } else if (currentTab === 'my-events' && userType === 'scout') {
+                    // For scout's own events
+                    filters.date_range = 'all';
+                }
+
+                // Convert filters to query string
+                const queryString = Object.entries(filters)
+                    .filter(([_, value]) => value)
+                    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+                    .join('&');
+
+                fetch(`${endpoint}?${queryString}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        eventsData = data;
+                        displayEvents(data);
+                        loadCalendarEvents();
+                    })
+                    .catch(error => {
+                        console.error('Error loading events:', error);
+                        eventsList.innerHTML = `
+                        <div class="text-center py-8 text-red-500">
+                            <i class='bx bx-error text-4xl mb-2'></i>
+                            <p>Failed to load events. Please try again.</p>
+                        </div>
+                    `;
+                    });
+            }
+
+            function loadCalendarEvents() {
+                // Get events for the current month
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+
+                const monthEvents = eventsData.filter(event => {
+                    const eventDate = new Date(event.start_date);
+                    return eventDate.getFullYear() === year && eventDate.getMonth() === month;
+                });
+
+                // Sort by date and limit to 3
+                monthEvents.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+                const eventsToShow = monthEvents.slice(0, 3);
+
+                // Display in calendar widget
+                calendarEventsList.innerHTML = '';
+
+                if (eventsToShow.length === 0) {
+                    calendarEventsList.innerHTML = '<p class="text-sm text-gray-500 dark:text-dark-txt">No events this month</p>';
+                    return;
+                }
+
+                eventsToShow.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'flex items-center';
+
+                    const dotColor = {
+                        'tryout': 'bg-blue-500',
+                        'showcase': 'bg-green-500',
+                        'training': 'bg-purple-500',
+                        'combine': 'bg-yellow-500'
+                    }[event.type] || 'bg-gray-500';
+
+                    eventElement.innerHTML = `
+                        <div class="w-2 h-2 ${dotColor} rounded-full mr-2"></div>
+                        <span class="text-xs dark:text-dark-txt truncate">
+                            ${new Date(event.start_date).getDate()}: ${event.title}
+                        </span>
+                    `;
+
+                    calendarEventsList.appendChild(eventElement);
+                });
+            }
+
+            function displayEvents(events) {
+                if (events.length === 0) {
+                    eventsList.innerHTML = `
+                        <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-calendar-x text-4xl mb-2'></i>
+                            <p>No events found matching your criteria</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                eventsList.innerHTML = '';
+
+                events.forEach(event => {
+                    const eventCard = document.createElement('div');
+                    eventCard.className = 'event-card bg-white dark:bg-dark-second rounded-lg shadow overflow-hidden';
+
+                    // Determine status and color
+                    let status, statusColor;
+                    if (userType === 'athlete') {
+                        if (event.registration_status) {
+                            status = event.registration_status === 'registered' ? 'Registered' : 'Attended';
+                            statusColor = event.registration_status === 'registered' ?
+                                'bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-800' :
+                                'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-800';
+                        } else {
+                            status = 'Not Registered';
+                            statusColor = 'bg-gray-100 text-gray-800 dark:bg-gray-200 dark:text-gray-800';
+                        }
+                    } else {
+                        status = `${event.participants_count || 0} Participants`;
+                        statusColor = 'bg-purple-100 text-purple-800 dark:bg-purple-200 dark:text-purple-800';
+                    }
+
+                    // Format dates
+                    const startDate = new Date(event.start_date);
+                    const endDate = event.end_date ? new Date(event.end_date) : null;
+
+                    let dateString = startDate.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+
+                    if (endDate && startDate.toDateString() !== endDate.toDateString()) {
+                        dateString += ` - ${endDate.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        })}`;
+                    }
+
+                    // Calculate days left
+                    const today = new Date();
+                    const timeDiff = startDate.getTime() - today.getTime();
+                    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    // Event type color
+                    const typeColor = {
+                        'tryout': 'bg-blue-500',
+                        'showcase': 'bg-green-500',
+                        'training': 'bg-purple-500',
+                        'combine': 'bg-yellow-500'
+                    }[event.type] || 'bg-gray-500';
+
+                    eventCard.innerHTML = `
+                        <div class="relative flex flex-col md:flex-row">
+                            <div class="event-type-indicator ${typeColor}"></div>
+                            <div class="p-6 flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-lg font-semibold dark:text-dark-txt">${event.title}</h3>
+                                    <span class="${statusColor} text-xs font-semibold px-2.5 py-0.5 rounded">
+                                        ${status}
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 dark:text-dark-txt mb-4">${event.description}</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                        ${event.sport || 'Soccer'}
+                                    </span>
+                                    <span class="${typeColor.replace('bg', 'bg').replace('500', '100')} ${typeColor.replace('bg', 'text').replace('500', '800')} text-xs font-medium px-2.5 py-0.5 rounded dark:${typeColor.replace('bg', 'bg').replace('500', '200')} dark:${typeColor.replace('bg', 'text').replace('500', '800')}">
+                                        ${event.type}
+                                    </span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500 dark:text-dark-txt">
+                                    <i class='bx bx-calendar mr-1'></i> ${dateString}
+                                    <i class='bx bx-time ml-3 mr-1'></i> ${startDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                                    ${endDate ? `- ${endDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}` : ''}
+                                    <i class='bx bx-map ml-3 mr-1'></i> ${event.location}
+                                </div>
+                            </div>
+                            <div class="p-6 border-t md:border-t-0 md:border-l border-gray-200 dark:border-dark-third flex flex-col items-center justify-center">
+                                <div class="text-center mb-2">
+                                    <div class="text-xs text-gray-500 dark:text-dark-txt">${daysLeft > 0 ? 'Days Left' : 'Days Ago'}</div>
+                                    <div class="text-2xl font-bold dark:text-dark-txt">${Math.abs(daysLeft)}</div>
+                                </div>
+                                ${userType === 'athlete' ? `
+                                    ${event.registration_status ? `
+                                        <button class="bg-gray-200 dark:bg-dark-third dark:text-dark-txt px-4 py-1 rounded-full text-sm">
+                                            View Details
+                                        </button>
+                                    ` : `
+                                        <button class="register-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-full text-sm" data-event-id="${event.id}">
+                                            Register
+                                        </button>
+                                    `}
+                                ` : `
+                                    <button class="view-participants-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-full text-sm" data-event-id="${event.id}">
+                                        View Participants
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    `;
+
+                    eventsList.appendChild(eventCard);
+                });
+
+                // Add event listeners to buttons
+                document.querySelectorAll('.register-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const eventId = this.dataset.eventId;
+                        registerForEvent(eventId);
+                    });
+                });
+
+                document.querySelectorAll('.view-participants-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const eventId = this.dataset.eventId;
+                        viewParticipants(eventId);
+                    });
+                });
+            }
+
+            function registerForEvent(eventId) {
+                fetch(`/api/events/${eventId}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Registration failed');
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Successfully registered for event!');
+                        loadEvents(); // Refresh events list
+                    })
+                    .catch(error => {
+                        alert(error.message || 'Failed to register for event');
+                    });
+            }
+
+            function viewParticipants(eventId) {
+                // In a real app, this would open a modal with participant list
+                alert(`Viewing participants for event ${eventId}`);
+            }
+
+            // Event modal functionality (same as before)
+            const createEventBtn = document.getElementById('create-event-btn');
+            const closeEventModal = document.getElementById('close-event-modal');
+            const cancelEvent = document.getElementById('cancel-event');
+            const createEventModal = document.getElementById('create-event-modal');
+
+            if (createEventBtn) {
+                createEventBtn.addEventListener('click', function () {
+                    createEventModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeEventModal) {
+                closeEventModal.addEventListener('click', function () {
+                    createEventModal.classList.add('hidden');
+                });
+            }
+
+            if (cancelEvent) {
+                cancelEvent.addEventListener('click', function () {
+                    createEventModal.classList.add('hidden');
+                });
+            }
+
+            createEventModal.addEventListener('click', function (e) {
+                if (e.target === createEventModal) {
+                    createEventModal.classList.add('hidden');
+                }
+            });
+
+            const eventForm = document.getElementById('event-form');
+            if (eventForm) {
+                eventForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const formData = {
+                        title: this.querySelector('input[type="text"]').value,
+                        description: this.querySelector('textarea').value,
+                        event_type: this.querySelector('select').value,
+                        location: this.querySelectorAll('input[type="text"]')[1].value,
+                        start_date: this.querySelectorAll('input[type="date"]')[0].value,
+                        end_date: this.querySelectorAll('input[type="date"]')[1].value,
+                        sport: this.querySelectorAll('select')[1].value
+                    };
+
+                    // Validate required fields
+                    if (!formData.title || !formData.start_date || !formData.location) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    fetch('/api/events', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Event creation failed');
+                            return response.json();
+                        })
+                        .then(data => {
+                            createEventModal.classList.add('hidden');
+                            alert('Event created successfully!');
+                            loadEvents(); // Refresh events list
+                            eventForm.reset();
+                        })
+                        .catch(error => {
+                            alert(error.message || 'Failed to create event');
+                        });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

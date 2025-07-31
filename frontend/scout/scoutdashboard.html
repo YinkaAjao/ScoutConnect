@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoutConnect - Talent Discovery Platform</title>
+    <link rel="shortcut icon" href="./images/sc-logo.png" type="image/png">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .athlete-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .filter-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .video-thumbnail:hover .play-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .rating-star {
+            color: #d1d5db;
+        }
+
+        .rating-star.active {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV -->
+    <nav class="bg-white dark:bg-dark-second h-max md:h-14 w-full shadow flex flex-col md:flex-row items-center justify-center md:justify-between fixed top-0 z-50 border-b dark:border-dark-third">
+        <!-- LEFT NAV -->
+        <div class="flex items-center justify-between w-full md:w-max px-4 py-2">
+            <a href="#" class="mr-2 hidden md:inline-block">
+                <img src="./images/sc-logo.png" alt="ScoutConnect logo" class="w-24 sm:w-20 lg:w-10 h-auto">
+            </a>
+            <a href="#" class="inline-block md:hidden">
+                <img src="./images/sc-logo-mb.png" alt="" class="w-32 h-auto">
+            </a>
+            <div class="flex items-center justify-between space-x-1">
+                <div class="relative bg-gray-100 dark:bg-dark-third px-2 py-2 w-10 h-10 sm:w-11 sm:h-11 lg:h-10 lg:w-10 xl:w-max xl:pl-3 xl:pr-8 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class='bx bx-search-alt-2 text-xl xl:mr-2 dark:text-dark-txt'></i>
+                    <input type="text" placeholder="Search athletes..." class="outline-none bg-transparent hidden xl:inline-block">
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt" id="dark-mode-toggle-mb">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT NAV -->
+
+        <!-- MAIN NAV -->
+        <ul class="flex w-full lg:w-max items-center justify-center">
+            <li class="w-1/5 md:w-max text-center">
+                <a href="scout_dashboard.html" class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block text-blue-500 border-b-4 border-blue-500">
+                    <i class='bx bxs-home' alt="Home"></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="scout_discover.html" class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-search'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="scout_shortlist.html" class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-bookmark'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center hidden md:inline-block">
+                <a href="scout_reports.html" class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-clipboard'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center inline-block md:hidden">
+                <a href="#" class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt relative">
+                    <i class='bx bx-menu'></i>
+                </a>
+            </li>
+        </ul>
+        <!-- END MAIN NAV -->
+
+        <!-- RIGHT NAV -->
+        <ul class="hidden md:flex mx-4 items-center justify-center">
+            <li class="h-full hidden xl:flex">
+                <a href="scout_profile.html" class="inline-flex items-center justify-center p-1 rounded-full hover:bg-gray-200 dark:hover:bg-dark-third mx-1">
+                    <img src="/frontend/images/profile.jpg" alt="Profile picture" class="rounded-full h-7 w-7">
+                    <span class="mx-2 font-semibold dark:text-dark-txt">Scout</span>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                    <i class='bx bx-plus'></i>
+                </div>
+            </li>
+            <li>
+                <a href="/frontend/athlete/messages.html" class="group relative">
+                    <div class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300">
+                        <i class='bx bx-message-rounded'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/frontend/athlete/notifications.html" class="group relative">
+                    <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                        <i class='bx bxs-bell'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative" id="dark-mode-toggle">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END RIGHT NAV -->
+    </nav>
+    <!-- END NAV -->
+
+    <!-- MAIN -->
+    <div class="flex justify-center h-screen">
+        <!-- LEFT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 left-0">
+            <ul class="p-4">
+                <li>
+                    <a href="scout_profile.html" class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-user-circle text-2xl'></i>
+                        <span class="font-semibold">My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="scout_shortlist.html" class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bookmark text-2xl'></i>
+                        <span class="font-semibold">Shortlisted Athletes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="scout_reports.html" class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-clipboard text-2xl'></i>
+                        <span class="font-semibold">Scouting Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="scout_team.html" class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-group text-2xl'></i>
+                        <span class="font-semibold">Team Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="scout_analytics.html" class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bar-chart-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Analytics Dashboard</span>
+                    </a>
+                </li>
+                <li>
+            </ul>
+            <div class="mt-auto p-6 text-sm text-gray-500 dark:text-dark-txt">
+                <a href="#">Privacy</a>
+                <span>.</span>
+                <a href="#">Terms</a>
+                <span>.</span>
+                <a href="#">Advertising</a>
+                <span>.</span>
+                <a href="#">Cookies</a>
+                <span>.</span>
+                <a href="#">Ad choices</a>
+                <span>.</span>
+                <a href="#">More</a>
+                <span>.</span>
+                <span>ScoutConnect © 2025</span>
+            </div>
+        </div>
+        <!-- END LEFT MENU -->
+
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 pt-32 lg:pt-16 px-2">
+            <!-- SEARCH FILTERS -->
+            <div class="px-4 mt-4 shadow rounded-lg bg-white dark:bg-dark-second" id="search-filters">
+                <div class="p-4 border-b border-gray-300 dark:border-dark-third">
+                    <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Advanced Athlete Search</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Sport</label>
+                            <select id="sport-filter" class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                <option value="">All Sports</option>
+                                <option value="soccer">Soccer</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="athletics">Athletics</option>
+                                <option value="swimming">Swimming</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Age Range</label>
+                            <div class="flex space-x-2">
+                                <select id="age-min-filter" class="w-1/2 px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                    <option value="">Min</option>
+                                    <option>12</option>
+                                    <option>14</option>
+                                    <option>16</option>
+                                    <option>18</option>
+                                    <option>20</option>
+                                </select>
+                                <select id="age-max-filter" class="w-1/2 px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                    <option value="">Max</option>
+                                    <option>16</option>
+                                    <option>18</option>
+                                    <option>20</option>
+                                    <option>22</option>
+                                    <option>25</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium dark:text-dark-txt mb-1">Location</label>
+                            <select id="location-filter" class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                                <option value="">Anywhere</option>
+                                <option>West Africa</option>
+                                <option>East Africa</option>
+                                <option>Southern Africa</option>
+                                <option>North Africa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button id="reset-filters" class="px-4 py-2 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-lg hover:bg-gray-300">
+                            Reset Filters
+                        </button>
+                        <button id="search-athletes" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            Search Athletes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update athlete results container -->
+            <div class="mt-4" id="athlete-results">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <h3 class="font-semibold dark:text-dark-txt" id="results-count">Recommended Athletes (0)</h3>
+                    <div class="flex space-x-2">
+                        <button class="sort-option text-sm text-gray-500 dark:text-dark-txt hover:text-blue-500" data-sort="newest">Newest</button>
+                        <button class="sort-option text-sm text-gray-500 dark:text-dark-txt hover:text-blue-500" data-sort="rating">Top Rated</button>
+                    </div>
+                </div>
+                <!-- Athlete cards will be dynamically inserted here -->
+            </div>
+            <!-- END SEARCH FILTERS -->
+        </div>
+        <!-- END MAIN CONTENT -->
+
+        <!-- RIGHT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 right-0 px-4">
+            <!-- SCOUTING ACTIVITY -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mb-4" id="scouting-activity-container">
+                <h2 class="font-bold dark:text-dark-txt mb-3">Recent Scouting Activity</h2>
+                <div class="space-y-3" id="scouting-activity-list">
+                    <!-- Activity items will be loaded here -->
+                </div>
+                <button class="w-full mt-3 text-blue-500 text-sm font-medium hover:bg-gray-100 dark:hover:bg-dark-third py-1 rounded-lg">
+                    View All Activity
+                </button>
+            </div>
+
+            <!-- SHORTLIST STATS -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mb-4" id="shortlist-stats-container">
+                <h2 class="font-bold dark:text-dark-txt mb-3">Shortlist Stats</h2>
+                <div class="space-y-4" id="shortlist-stats-list">
+                    <!-- Stats will be loaded here -->
+                </div>
+            </div>
+        </div>
+        <!-- END RIGHT MENU -->
+    </div>
+    <!-- END MAIN -->
+
+    <script src="/frontend/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Authentication check
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/frontend/login.html';
+                return;
+            }
+
+            const API_BASE_URL = 'http://localhost:3000';
+
+            // DOM elements
+            const searchFilters = document.getElementById('search-filters');
+            const athleteResults = document.getElementById('athlete-results');
+            const searchButton = document.getElementById('search-athletes');
+            const resetButton = document.getElementById('reset-filters');
+            const sortOptions = document.querySelectorAll('.sort-option');
+            const resultsCount = document.getElementById('results-count');
+            const scoutingActivityList = document.getElementById('scouting-activity-list');
+            const shortlistStatsList = document.getElementById('shortlist-stats-list');
+
+            // Current filters and sort
+            let currentFilters = {
+                sport: '',
+                ageMin: '',
+                ageMax: '',
+                country: '',
+                sort: 'newest'
+            };
+
+            // Initialize the dashboard
+            initDashboard();
+
+            // Event listeners
+            searchButton.addEventListener('click', searchAthletes);
+            resetButton.addEventListener('click', resetFilters);
+            sortOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    currentFilters.sort = option.dataset.sort;
+                    updateSortUI();
+                    searchAthletes();
+                });
+            });
+
+            // Functions
+            async function initDashboard() {
+                try {
+                    // Load initial athlete data
+                    await searchAthletes();
+
+                    // Load scouting activity
+                    await loadScoutingActivity();
+
+                    // Load shortlist stats
+                    await loadShortlistStats();
+                } catch (error) {
+                    console.error('Dashboard initialization error:', error);
+                    showError('Failed to initialize dashboard');
+                }
+            }
+
+            async function searchAthletes() {
+                try {
+                    // Update current filters
+                    currentFilters.sport = document.getElementById('sport-filter').value;
+                    currentFilters.ageMin = document.getElementById('age-min-filter').value;
+                    currentFilters.ageMax = document.getElementById('age-max-filter').value;
+                    currentFilters.country = document.getElementById('location-filter').value;
+
+                    // Build query string
+                    const queryParams = new URLSearchParams();
+                    if (currentFilters.sport) queryParams.append('sport', currentFilters.sport);
+                    if (currentFilters.ageMin) queryParams.append('age_min', currentFilters.ageMin);
+                    if (currentFilters.ageMax) queryParams.append('age_max', currentFilters.ageMax);
+                    if (currentFilters.country) queryParams.append('country', currentFilters.country);
+                    if (currentFilters.sort) queryParams.append('sort', currentFilters.sort);
+
+                    // Fetch athletes from API
+                    const response = await fetch(`${API_BASE_URL}/api/athletes?${queryParams.toString()}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch athletes');
+                    }
+
+                    const athletes = await response.json();
+                    renderAthletes(athletes);
+                } catch (error) {
+                    console.error('Athlete search error:', error);
+                    showError('Failed to search athletes');
+                }
+            }
+
+            function renderAthletes(athletes) {
+                // Clear existing results
+                athleteResults.innerHTML = '';
+
+                // Update results count
+                resultsCount.textContent = `Recommended Athletes (${athletes.length})`;
+
+                if (athletes.length === 0) {
+                    athleteResults.innerHTML = '<p class="text-center py-4 text-gray-500">No athletes found matching your criteria</p>';
+                    return;
+                }
+
+                // Create athlete cards
+                athletes.forEach(athlete => {
+                    const athleteCard = document.createElement('div');
+                    athleteCard.className = 'athlete-card bg-white dark:bg-dark-second shadow rounded-lg p-4 mb-4 transition-all duration-300';
+                    athleteCard.dataset.athleteId = athlete.id;
+
+                    athleteCard.innerHTML = `
+                        <div class="flex items-start">
+                            <div class="relative mr-4">
+                                <img src="${athlete.profile_pic || '/frontend/images/profile.jpg'}" alt="${athlete.full_name}" class="w-20 h-20 rounded-full border-2 border-blue-500">
+                                ${athlete.is_online ? '<span class="absolute bottom-0 right-0 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></span>' : ''}
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-bold dark:text-dark-txt">${athlete.full_name}</h3>
+                                        <p class="text-sm text-gray-500 dark:text-dark-txt">${athlete.age} years • ${athlete.position} • ${athlete.country}</p>
+                                        <div class="flex items-center mt-1 rating-container" data-athlete-id="${athlete.id}">
+                                            ${renderRatingStars(athlete.rating)}
+                                            <span class="text-xs text-gray-500 dark:text-dark-txt ml-1">(${athlete.rating?.toFixed(1) || 'Not rated'})</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="shortlist-btn w-8 h-8 grid place-items-center text-xl ${athlete.is_shortlisted ? 'text-blue-500 bxs-bookmark' : 'text-gray-500 bx-bookmark'} hover:bg-gray-200 dark:hover:bg-dark-third rounded-full cursor-pointer" data-athlete-id="${athlete.id}">
+                                            <i class='${athlete.is_shortlisted ? 'bxs-bookmark' : 'bx-bookmark'}'></i>
+                                        </button>
+                                        <button class="w-8 h-8 grid place-items-center text-xl text-gray-500 hover:bg-gray-200 dark:hover:bg-dark-third rounded-full cursor-pointer">
+                                            <i class='bx bx-dots-horizontal-rounded'></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 grid grid-cols-2 gap-2">
+                                    ${renderAthleteStats(athlete.stats)}
+                                </div>
+
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="view-profile-btn flex-1 bg-blue-500 hover:bg-blue-600 text-white py-1 rounded-lg text-sm" data-athlete-id="${athlete.id}">
+                                        View Profile
+                                    </button>
+                                    <button class="quick-report-btn flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-dark-third dark:hover:bg-dark-main dark:text-dark-txt py-1 rounded-lg text-sm" data-athlete-id="${athlete.id}">
+                                        Quick Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    athleteResults.appendChild(athleteCard);
+                });
+
+                // Add event listeners to the new elements
+                addAthleteCardEventListeners();
+            }
+
+            function renderRatingStars(rating) {
+                if (!rating) rating = 0;
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    const activeClass = i <= Math.round(rating) ? 'active' : '';
+                    stars += `<div class="rating-star ${activeClass}" data-rating="${i}"><i class='bx bxs-star'></i></div>`;
+                }
+                return stars;
+            }
+
+            function renderAthleteStats(stats) {
+                if (!stats || stats.length === 0) {
+                    return `
+                        <div class="bg-gray-50 dark:bg-dark-third p-2 rounded-lg">
+                            <p class="text-xs text-gray-500 dark:text-dark-txt">No stats available</p>
+                        </div>
+                    `.repeat(4);
+                }
+
+                return stats.slice(0, 4).map(stat => `
+                    <div class="bg-gray-50 dark:bg-dark-third p-2 rounded-lg">
+                        <p class="text-xs text-gray-500 dark:text-dark-txt">${stat.stat_name}</p>
+                        <p class="font-semibold dark:text-dark-txt">${stat.stat_value}</p>
+                    </div>
+                `).join('');
+            }
+
+            async function loadScoutingActivity() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/scouting-activity`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch scouting activity');
+                    }
+
+                    const activities = await response.json();
+                    renderScoutingActivity(activities);
+                } catch (error) {
+                    console.error('Scouting activity error:', error);
+                }
+            }
+
+            function renderScoutingActivity(activities) {
+                if (!scoutingActivityList) return;
+                
+                scoutingActivityList.innerHTML = activities.map(activity => `
+                    <div class="flex items-start">
+                        <img src="${activity.scout_profile_pic || '/images/default-profile.jpg'}" alt="${activity.scout_name}" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <p class="text-sm dark:text-dark-txt">
+                                <span class="font-semibold">${activity.scout_name}</span> ${activity.action} <span class="font-semibold">${activity.athlete_name}</span>
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-dark-txt">${formatTimeAgo(new Date(activity.timestamp))}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            async function loadShortlistStats() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/shortlists/stats`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch shortlist stats');
+                    }
+
+                    const stats = await response.json();
+                    renderShortlistStats(stats);
+                } catch (error) {
+                    console.error('Shortlist stats error:', error);
+                }
+            }
+
+            function renderShortlistStats(stats) {
+                if (!shortlistStatsList) return;
+                
+                shortlistStatsList.innerHTML = `
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">Total Athletes</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">${stats.total}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-blue-500" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">Contacted</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">${stats.contacted}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-green-500" style="width: ${(stats.contacted / stats.total) * 100}%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">Tryout Invites</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">${stats.tryouts}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-purple-500" style="width: ${(stats.tryouts / stats.total) * 100}%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm dark:text-dark-txt">Signed</span>
+                            <span class="text-sm font-semibold dark:text-dark-txt">${stats.signed}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-yellow-500" style="width: ${(stats.signed / stats.total) * 100}%"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function addAthleteCardEventListeners() {
+                // Rating stars
+                document.querySelectorAll('.rating-star').forEach(star => {
+                    star.addEventListener('click', async function () {
+                        const athleteId = this.closest('.rating-container').dataset.athleteId;
+                        const rating = parseInt(this.dataset.rating);
+
+                        try {
+                            const response = await fetch(`${API_BASE_URL}/api/athletes/${athleteId}/rate`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify({ rating })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Failed to rate athlete');
+                            }
+
+                            // Update the UI
+                            const stars = this.parentElement.querySelectorAll('.rating-star');
+                            stars.forEach((s, index) => {
+                                if (index < rating) {
+                                    s.classList.add('active');
+                                } else {
+                                    s.classList.remove('active');
+                                }
+                            });
+
+                            // Update the rating text
+                            const ratingText = this.parentElement.querySelector('span');
+                            ratingText.textContent = `(${rating.toFixed(1)})`;
+                        } catch (error) {
+                            console.error('Rating error:', error);
+                            showError('Failed to rate athlete');
+                        }
+                    });
+                });
+
+                // Shortlist buttons
+                document.querySelectorAll('.shortlist-btn').forEach(btn => {
+                    btn.addEventListener('click', async function (e) {
+                        e.stopPropagation();
+                        const athleteId = this.dataset.athleteId;
+                        const isShortlisted = this.querySelector('i').classList.contains('bxs-bookmark');
+
+                        try {
+                            const response = await fetch(`${API_BASE_URL}/api/shortlists`, {
+                                method: isShortlisted ? 'DELETE' : 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify({ athlete_id: athleteId })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(isShortlisted ? 'Failed to remove from shortlist' : 'Failed to add to shortlist');
+                            }
+
+                            // Toggle the icon
+                            const icon = this.querySelector('i');
+                            if (isShortlisted) {
+                                icon.classList.remove('bxs-bookmark', 'text-blue-500');
+                                icon.classList.add('bx-bookmark');
+                            } else {
+                                icon.classList.remove('bx-bookmark');
+                                icon.classList.add('bxs-bookmark', 'text-blue-500');
+                            }
+
+                            // Update the shortlist stats
+                            await loadShortlistStats();
+                        } catch (error) {
+                            console.error('Shortlist error:', error);
+                            showError(isShortlisted ? 'Failed to remove from shortlist' : 'Failed to add to shortlist');
+                        }
+                    });
+                });
+
+                // View profile buttons
+                document.querySelectorAll('.view-profile-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const athleteId = this.dataset.athleteId;
+                        window.location.href = `/frontend/athlete/athleteprofile.html?id=${athleteId}`;
+                    });
+                });
+
+                // Quick report buttons
+                document.querySelectorAll('.quick-report-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const athleteId = this.dataset.athleteId;
+                        // Open quick report modal or page
+                        openQuickReportModal(athleteId);
+                    });
+                });
+            }
+
+            function resetFilters() {
+                document.getElementById('sport-filter').value = '';
+                document.getElementById('age-min-filter').value = '';
+                document.getElementById('age-max-filter').value = '';
+                document.getElementById('location-filter').value = '';
+
+                currentFilters = {
+                    sport: '',
+                    ageMin: '',
+                    ageMax: '',
+                    country: '',
+                    sort: currentFilters.sort
+                };
+
+                searchAthletes();
+            }
+
+            function updateSortUI() {
+                document.querySelectorAll('.sort-option').forEach(option => {
+                    if (option.dataset.sort === currentFilters.sort) {
+                        option.classList.add('text-blue-500');
+                        option.classList.remove('text-gray-500');
+                    } else {
+                        option.classList.remove('text-blue-500');
+                        option.classList.add('text-gray-500');
+                    }
+                });
+            }
+
+            function formatTimeAgo(date) {
+                const now = new Date();
+                const diffInSeconds = Math.floor((now - date) / 1000);
+
+                if (diffInSeconds < 60) {
+                    return `${diffInSeconds}s ago`;
+                } else if (diffInSeconds < 3600) {
+                    const minutes = Math.floor(diffInSeconds / 60);
+                    return `${minutes}m ago`;
+                } else if (diffInSeconds < 86400) {
+                    const hours = Math.floor(diffInSeconds / 3600);
+                    return `${hours}h ago`;
+                } else if (diffInSeconds < 2592000) {
+                    const days = Math.floor(diffInSeconds / 86400);
+                    return `${days}d ago`;
+                } else {
+                    return date.toLocaleDateString();
+                }
+            }
+
+            function showError(message) {
+                // Implement error notification UI
+                console.error(message);
+                alert(message); // Replace with a proper notification system
+            }
+
+            function openQuickReportModal(athleteId) {
+                // Implement quick report modal
+                console.log('Open quick report for athlete:', athleteId);
+            }
+        });
+    </script>
+</body>
+</html>

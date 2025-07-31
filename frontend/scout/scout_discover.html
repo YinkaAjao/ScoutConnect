@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Athletes | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+    <style>
+        .map-container {
+            height: 400px;
+            background-color: #e5e7eb;
+            border-radius: 0.5rem;
+        }
+        .filter-card {
+            transition: all 0.2s ease;
+        }
+        .filter-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV (Same as previous) -->
+    
+    <!-- MAIN CONTENT -->
+    <div class="flex justify-center h-screen pt-16">
+        <!-- LEFT MENU (Same as previous) -->
+        
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 px-2">
+            <!-- MAP VIEW -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Athlete Map View</h2>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm">Heat Map</button>
+                        <button class="px-3 py-1 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-lg text-sm">Cluster View</button>
+                    </div>
+                </div>
+                <div class="map-container relative">
+                    <div class="absolute top-4 left-4 z-10 bg-white dark:bg-dark-second p-2 rounded-lg shadow">
+                        <i class='bx bx-current-location text-xl'></i>
+                    </div>
+                    <!-- Map would be implemented with Mapbox/Google Maps API -->
+                    <div class="w-full h-full flex items-center justify-center text-gray-500">
+                        <p>Interactive map would appear here with athlete locations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <h2 class="text-xl font-bold dark:text-dark-txt mb-4">Advanced Filters</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="filter-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold dark:text-dark-txt">Physical Attributes</h3>
+                                <p class="text-sm text-gray-500 dark:text-dark-txt">Height, Weight, etc.</p>
+                            </div>
+                            <i class='bx bx-chevron-right text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="filter-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold dark:text-dark-txt">Performance Metrics</h3>
+                                <p class="text-sm text-gray-500 dark:text-dark-txt">Speed, Endurance, etc.</p>
+                            </div>
+                            <i class='bx bx-chevron-right text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="filter-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold dark:text-dark-txt">Skill Ratings</h3>
+                                <p class="text-sm text-gray-500 dark:text-dark-txt">Technical abilities</p>
+                            </div>
+                            <i class='bx bx-chevron-right text-xl'></i>
+                        </div>
+                    </div>
+                    <div class="filter-card bg-gray-50 dark:bg-dark-third p-4 rounded-lg cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold dark:text-dark-txt">Potential Rating</h3>
+                                <p class="text-sm text-gray-500 dark:text-dark-txt">Scout assessments</p>
+                            </div>
+                            <i class='bx bx-chevron-right text-xl'></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button class="px-4 py-2 bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-lg hover:bg-gray-300">
+                        Reset Filters
+                    </button>
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                        Search Athletes (247)
+                    </button>
+                </div>
+            </div>
+
+            <!-- SAVED SEARCHES -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-4 mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-dark-txt">Saved Searches</h2>
+                    <button class="text-blue-500 hover:text-blue-700">+ New Search</button>
+                </div>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-dark-third rounded-lg cursor-pointer">
+                        <div>
+                            <h3 class="font-medium dark:text-dark-txt">U-20 African Strikers</h3>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Last used: 2 days ago</p>
+                        </div>
+                        <i class='bx bx-chevron-right text-xl'></i>
+                    </div>
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-dark-third rounded-lg cursor-pointer">
+                        <div>
+                            <h3 class="font-medium dark:text-dark-txt">Fastest Wingers</h3>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Last used: 1 week ago</p>
+                        </div>
+                        <i class='bx bx-chevron-right text-xl'></i>
+                    </div>
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-dark-third rounded-lg cursor-pointer">
+                        <div>
+                            <h3 class="font-medium dark:text-dark-txt">Academy Prospects</h3>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">Last used: 3 days ago</p>
+                        </div>
+                        <i class='bx bx-chevron-right text-xl'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT MENU (Same as previous) -->
+    </div>
+</body>
+</html>

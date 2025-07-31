@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Videos | ScoutConnect</title>
+    <link rel="shortcut icon" href="./images/sc-logo.png" type="image/png">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/frontend/tailwind/tailwind.css">
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+    <!-- NAV -->
+    <nav
+        class="bg-white dark:bg-dark-second h-max md:h-14 w-full shadow flex flex-col md:flex-row items-center justify-center md:justify-between fixed top-0 z-50 border-b dark:border-dark-third">
+
+        <!-- LEFT NAV -->
+        <div class="flex items-center justify-between w-full md:w-max px-4 py-2">
+            <a href="#" class="mr-2 hidden md:inline-block">
+                <img src="./images/sc-logo.png" alt="ScoutConnect logo" class="w-24 sm:w-20 lg:w-10 h-auto">
+            </a>
+            <a href="#" class="inline-block md:hidden">
+                <img src="./images/sc-logo-mb.png" alt="" class="w-32 h-auto">
+            </a>
+            <div class="flex items-center justify-between space-x-1">
+                <div
+                    class="relative bg-gray-100 dark:bg-dark-third px-2 py-2 w-10 h-10 sm:w-11 sm:h-11 lg:h-10 lg:w-10 xl:w-max xl:pl-3 xl:pr-8 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class='bx bx-search-alt-2 text-xl xl:mr-2 dark:text-dark-txt'></i>
+                    <input type="text" placeholder="Search videos..."
+                        class="outline-none bg-transparent hidden xl:inline-block">
+                </div>
+                <div
+                    class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="text-2xl grid place-items-center md:hidden bg-gray-200 dark:bg-dark-third rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300 dark:text-dark-txt"
+                    id="dark-mode-toggle-mb">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT NAV -->
+
+        <!-- MAIN NAV -->
+        <ul class="flex w-full lg:w-max items-center justify-center">
+            <li class="w-1/5 md:w-max text-center">
+                <a href="athletedashboard.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bxs-home'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="achievements.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-trophy'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center">
+                <a href="events.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-calendar'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center hidden md:inline-block">
+                <a href="video.html"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block text-blue-500 border-b-4 border-blue-500">
+                    <i class='bx bx-video'></i>
+                </a>
+            </li>
+            <li class="w-1/5 md:w-max text-center inline-block md:hidden">
+                <a href="#"
+                    class="w-full text-3xl py-2 px-3 xl:px-12 cursor-pointer text-center inline-block rounded text-gray-600 hover:bg-gray-100 dark:hover:bg-dark-third dark:text-dark-txt">
+                    <i class='bx bx-menu'></i>
+                </a>
+            </li>
+        </ul>
+        <!-- END MAIN NAV -->
+
+        <!-- RIGHT NAV -->
+        <ul class="hidden md:flex mx-4 items-center justify-center">
+            <li class="h-full hidden xl:flex">
+                <a href="athlete_profile.html"
+                    class="inline-flex items-center justify-center p-1 rounded-full hover:bg-gray-200 dark:hover:bg-dark-third mx-1">
+                    <img src="./images/profile.jpg" alt="Profile picture" class="rounded-full h-7 w-7">
+                    <span class="mx-2 font-semibold dark:text-dark-txt">Athlete</span>
+                </a>
+            </li>
+            <li>
+                <button id="logout-btn"
+                    class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                    <i class='bx bx-log-out'></i>
+                </button>
+                <script>
+                    document.getElementById('logout-btn').addEventListener('click', function () {
+                        localStorage.removeItem('token');
+                        window.location.href = '/frontend/login.html';
+                    });
+                </script>
+            </li>
+            <li>
+                <a href="messages.html" class="group relative">
+                    <div
+                        class="text-xl hidden xl:grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300">
+                        <i class='bx bx-message-rounded'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="notifications.html" class="group relative">
+                    <div
+                        class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative">
+                        <i class='bx bxs-bell'></i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full mx-1 p-3 cursor-pointer hover:bg-gray-300 relative"
+                    id="dark-mode-toggle">
+                    <i class='bx bxs-moon'></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END RIGHT NAV -->
+    </nav>
+    <!-- END NAV -->
+
+    <!-- MAIN -->
+    <div class="flex justify-center h-screen">
+        <!-- LEFT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:flex flex-col fixed top-0 left-0">
+            <ul class="p-4">
+                <li>
+                    <a href="athlete_profile.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-user-circle text-2xl'></i>
+                        <span class="font-semibold">My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-group text-2xl'></i>
+                        <span class="font-semibold">Connections</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-calendar-event text-2xl'></i>
+                        <span class="font-semibold">Events</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-bar-chart-alt-2 text-2xl'></i>
+                        <span class="font-semibold">Performance Stats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="video.html"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-lg transition-all dark:text-dark-txt dark:hover:bg-dark-third">
+                        <i class='bx bx-video text-2xl'></i>
+                        <span class="font-semibold">Training Videos</span>
+                    </a>
+                </li>
+                <li class="border-b border-gray-200 dark:border-dark-third mt-6"></li>
+            </ul>
+            <div class="mt-auto p-6 text-sm text-gray-500 dark:text-dark-txt">
+                <a href="#">Privacy</a>
+                <span>.</span>
+                <a href="#">Terms</a>
+                <span>.</span>
+                <a href="#">Advertising</a>
+                <span>.</span>
+                <a href="#">Cookies</a>
+                <span>.</span>
+                <a href="#">Ad choices</a>
+                <span>.</span>
+                <a href="#">More</a>
+                <span>.</span>
+                <span>ScoutConnect © 2025</span>
+            </div>
+        </div>
+        <!-- END LEFT MENU -->
+
+        <!-- MAIN CONTENT -->
+        <div class="w-full lg:w-2/3 xl:w-2/5 pt-32 lg:pt-16 px-2">
+            <!-- VIDEO FILTER -->
+            <div class="px-4 mt-4 shadow rounded-lg bg-white dark:bg-dark-second">
+                <div class="p-4 flex space-x-4 overflow-x-auto">
+                    <div class="flex-shrink-0 bg-blue-500 text-white px-4 py-1 rounded-full cursor-pointer">
+                        <span>All Videos</span>
+                    </div>
+                    <div
+                        class="flex-shrink-0 bg-gray-200 dark:bg-dark-third px-4 py-1 rounded-full cursor-pointer dark:text-dark-txt">
+                        <span>Training</span>
+                    </div>
+                    <div
+                        class="flex-shrink-0 bg-gray-200 dark:bg-dark-third px-4 py-1 rounded-full cursor-pointer dark:text-dark-txt">
+                        <span>Matches</span>
+                    </div>
+                    <div
+                        class="flex-shrink-0 bg-gray-200 dark:bg-dark-third px-4 py-1 rounded-full cursor-pointer dark:text-dark-txt">
+                        <span>Drills</span>
+                    </div>
+                </div>
+            </div>
+            <!-- END VIDEO FILTER -->
+
+            <!-- VIDEO LIST -->
+            <div id="videos-container" class="mt-4 space-y-4">
+                <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                    <i class='bx bx-video text-4xl mb-2'></i>
+                    <p>No videos uploaded yet.</p>
+                </div>
+            </div>
+            <!-- END VIDEO LIST -->
+        </div>
+        <!-- END MAIN CONTENT -->
+
+        <!-- RIGHT MENU -->
+        <div class="w-1/5 pt-16 h-full hidden xl:block px-4 fixed top-0 right-0">
+            <div class="h-full">
+                <div class="flex justify-between items-center px-4 pt-4">
+                    <span class="font-semibold text-gray-500 text-lg dark:text-dark-txt">Recommended Channels</span>
+                    <span
+                        class="text-blue-500 cursor-pointer hover:bg-gray-200 dark:hover:bg-dark-third p-2 rounded-md">See
+                        All</span>
+                </div>
+                <ul class="p-2">
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <img src="./images/profile.jpg" alt="Channel picture" class="w-16 h-16 rounded-full">
+                            <div>
+                                <span class="font-semibold">Premier League Scouts</span>
+                                <p class="text-sm text-gray-500">125 videos</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <img src="./images/profile.jpg" alt="Channel picture" class="w-16 h-16 rounded-full">
+                            <div>
+                                <span class="font-semibold">CAF Training</span>
+                                <p class="text-sm text-gray-500">89 videos</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <img src="./images/profile.jpg" alt="Channel picture" class="w-16 h-16 rounded-full">
+                            <div>
+                                <span class="font-semibold">Olympic Coaches</span>
+                                <p class="text-sm text-gray-500">67 videos</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <img src="./images/profile.jpg" alt="Channel picture" class="w-16 h-16 rounded-full">
+                            <div>
+                                <span class="font-semibold">Youth Development</span>
+                                <p class="text-sm text-gray-500">42 videos</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="border-b border-gray-200 dark:border-dark-third mt-6"></div>
+
+                <div class="flex justify-between items-center px-4 pt-4">
+                    <span class="font-semibold text-gray-500 text-lg dark:text-dark-txt">Recently Watched</span>
+                </div>
+                <ul class="p-2">
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <div class="relative">
+                                <img src="./images/profile.jpg" alt="Video thumbnail" class="w-16 h-16 rounded-lg">
+                                <div
+                                    class="absolute bottom-1 right-1 bg-black bg-opacity-70 text-white px-1 text-xs rounded">
+                                    5:30
+                                </div>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-sm">Shooting Techniques</span>
+                                <p class="text-xs text-gray-500">Barcelona FC</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div
+                            class="flex items-center space-x-4 p-2 hover:bg-gray-200 dark:hover:bg-dark-third dark:text-dark-txt rounded-lg cursor-pointer">
+                            <div class="relative">
+                                <img src="./images/profile.jpg" alt="Video thumbnail" class="w-16 h-16 rounded-lg">
+                                <div
+                                    class="absolute bottom-1 right-1 bg-black bg-opacity-70 text-white px-1 text-xs rounded">
+                                    12:15
+                                </div>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-sm">Defensive Positioning</span>
+                                <p class="text-xs text-gray-500">Chelsea Academy</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END RIGHT MENU -->
+    </div>
+    <!-- END MAIN -->
+
+    <script src="/frontend/script.js"></script>
+    <script>
+        async function loadVideos() {
+            try {
+                const response = await fetch('/api/athlete/videos', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load videos');
+
+                const videos = await response.json();
+                const container = document.getElementById('videos-container');
+
+                if (videos.length === 0) {
+                    container.innerHTML = `
+                <div class="text-center py-8 text-gray-500 dark:text-dark-txt">
+                    <i class='bx bx-video text-4xl mb-2'></i>
+                    <p>No videos uploaded yet.</p>
+                </div>
+            `;
+                    return;
+                }
+
+                container.innerHTML = videos.map(video => `
+            <div class="shadow bg-white dark:bg-dark-second dark:text-dark-txt rounded-lg">
+                <div class="relative">
+                    <img src="${video.thumbnail || '/images/default-video-thumbnail.jpg'}" alt="Video thumbnail" class="w-full h-auto">
+                    <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
+                        ${video.duration}
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl bg-black bg-opacity-50 rounded-full p-3">
+                        <i class='bx bx-play'></i>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex items-start space-x-2">
+                        <img src="${video.channelImage || '/images/default-profile.jpg'}" alt="Channel picture" class="w-10 h-10 rounded-full">
+                        <div>
+                            <h3 class="font-semibold">${video.title}</h3>
+                            <p class="text-sm text-gray-500 dark:text-dark-txt">${video.channel} • ${video.views} views • ${video.uploaded}</p>
+                            <p class="mt-2 text-sm">${video.description}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-4 pt-2 border-t border-gray-200 dark:border-dark-third">
+                        <div class="flex items-center space-x-2 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-like'></i>
+                            <span>${video.likes}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-comment'></i>
+                            <span>${video.comments}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-gray-500 dark:text-dark-txt">
+                            <i class='bx bx-share-alt'></i>
+                            <span>Share</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+            } catch (error) {
+                console.error('Error loading videos:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

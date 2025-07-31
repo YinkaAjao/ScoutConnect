@@ -1,0 +1,83 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar {
+  display: flex;
+  width: 100vw;
+  height: 60px;
+  background-color: #a1a1a1;
+  color: white;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.left_col {
+  flex: 0.33;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.middle_col {
+  flex: 0.33;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.right_col {
+  flex: 0.33;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.logo {
+  background: red;
+  margin-left: 20px;
+}
+
+.search_icon {
+  background: yellow;
+  margin-left: 10px;
+}
+
+.marginLeft {
+  margin-left: 10px;
+}
+
+.marginRight {
+  margin-right: 10px;
+}
+
+.account {
+  background: blue;
+  margin-left: 10px;
+}
+
+.notifications {
+  background: orange;
+}
+.messages {
+  background: purple;
+}
+
+.plus {
+  background: white;
+}
+
+.home {
+  background: tomato;
+}
+

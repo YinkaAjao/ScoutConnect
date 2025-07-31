@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | ScoutConnect</title>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./tailwind/tailwind.css">
+    <style>
+        .auth-card {
+            transition: all 0.3s ease;
+        }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-main">
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <div class="text-xl grid place-items-center bg-gray-200 dark:bg-dark-third dark:text-dark-txt rounded-full w-10 h-10 cursor-pointer hover:bg-gray-300"
+            id="dark-mode-toggle">
+            <i class='bx bxs-moon'></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold dark:text-dark-txt mb-2">Welcome Back</h1>
+                <p class="text-gray-600 dark:text-dark-txt">Log in to your ScoutConnect account</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="bg-white dark:bg-dark-second rounded-lg shadow p-6 mb-6 auth-card">
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Email</label>
+                        <input type="email" required
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium dark:text-dark-txt mb-1">Password</label>
+                        <input type="password" required
+                            class="w-full px-3 py-2 border rounded-lg dark:bg-dark-third dark:border-dark-third dark:text-dark-txt">
+                        <div class="text-right mt-1">
+                            <a href="#" class="text-sm text-blue-500 hover:text-blue-700">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-medium mb-4">
+                        Log In
+                    </button>
+
+                    <div class="relative flex items-center justify-center mb-4">
+                        <div class="flex-grow border-t border-gray-300 dark:border-dark-third"></div>
+                        <span class="flex-shrink mx-4 text-gray-500 dark:text-dark-txt">or</span>
+                        <div class="flex-grow border-t border-gray-300 dark:border-dark-third"></div>
+                    </div>
+
+                    <button type="button"
+                        class="w-full bg-white dark:bg-dark-third border border-gray-300 dark:border-dark-third hover:bg-gray-50 dark:hover:bg-dark-main text-gray-700 dark:text-dark-txt py-2 rounded-lg font-medium flex items-center justify-center">
+                        <i class='bx bxl-google mr-2'></i> Continue with Google
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center text-sm dark:text-dark-txt">
+                Don't have an account? <a href="signup.html" class="text-blue-500 font-medium">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dark/Light Mode Toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+            // Check for saved user preference or use system preference
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            darkModeToggle.addEventListener('click', function () {
+                const isDark = document.documentElement.classList.contains('dark');
+
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.innerHTML = '<i class="bx bx-sun"></i>';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.innerHTML = '<i class="bx bxs-moon"></i>';
+                }
+            });
+
+            const loginForm = document.getElementById('login-form');
+
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const email = loginForm.querySelector('input[type="email"]').value;
+                const password = loginForm.querySelector('input[type="password"]').value;
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Save token to localStorage
+                        localStorage.setItem('token', data.token);
+
+                        // Redirect based on user type
+                        if (data.user.user_type === 'athlete') {
+                            window.location.href = '/frontend/athlete/athletedashboard.html';
+                        } else {
+                            window.location.href = '/frontend/scout/scoutdashboard.html';
+                        }
+                    } else {
+                        alert(data.error || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Login failed. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
